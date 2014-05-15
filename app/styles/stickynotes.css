@@ -1,0 +1,159 @@
+﻿     .note
+     {
+        position: absolute;
+        box-shadow: 0 6px 12px #111111;
+        z-index: 100;
+     }  
+    .yellow-note-top
+    {
+        background: #f8f7b6;
+        height: 30px;
+    }
+    .yellow-note
+    {
+        background: rgb(253, 253, 203);
+        background-image: -webkit-linear-gradient(top, rgb(253, 253, 203), rgb(252, 249, 162));
+        background-image: -moz-linear-gradient(top, rgb(253, 253, 203), rgb(252, 249, 162));
+        background-image: -o-linear-gradient(top, rgb(253, 253, 203), rgb(252, 249, 162));
+        background-image: -ms-linear-gradient(top, rgb(253, 253, 203), rgb(252, 249, 162));
+        background-image: linear-gradient(top, rgb(253, 253, 203), rgb(252, 249, 162));
+    }
+    
+    .blue-note-top
+    {
+        background: #c9ecf8;
+        height: 30px;
+    }
+    .blue-note
+    {
+        background-color: rgb(216, 242, 250);
+        background-image: -webkit-linear-gradient(top, rgb(216, 242, 250), rgb(184, 219, 244));
+        background-image: -moz-linear-gradient(top, rgb(216, 242, 250), rgb(184, 219, 244));
+        background-image: -o-linear-gradient(top, rgb(216, 242, 250), rgb(184, 219, 244));
+        background-image: -ms-linear-gradient(top, rgb(216, 242, 250), rgb(184, 219, 244));
+        background-image: linear-gradient(top, rgb(216, 242, 250), rgb(184, 219, 244));
+
+    }
+    
+    .pink-note-top
+    {
+        background: #f1c3f1;
+        height: 30px;
+    }
+    .pink-note
+    {
+        background: rgb(245, 210, 245);
+        background-image: -webkit-linear-gradient(rgba(245, 210, 245, 1), rgba(235, 174, 235, 1));
+        background-image: -moz-linear-gradient(rgba(245, 210, 245, 1), rgba(235, 174, 235, 1));
+        background-image: -o-linear-gradient(rgba(245, 210, 245, 1), rgba(235, 174, 235, 1));
+        background-image: -ms-linear-gradient(rgba(245, 210, 245, 1), rgba(235, 174, 235, 1));
+        background-image: linear-gradient(rgba(245, 210, 245, 1), rgba(235, 174, 235, 1));
+    }
+    
+    .green-note-top
+    {
+        background: #c5f7c1;
+        height: 30px;
+    }
+    .green-note
+    {
+        background: rgb(209, 254, 203);
+        background-image: -moz-linear-gradient(rgba(209, 254, 203, 1), rgba(177, 232, 174, 1));
+        background-image: -ms-linear-gradient(rgba(209, 254, 203, 1), rgba(177, 232, 174, 1));
+        background-image: -o-linear-gradient(rgba(209, 254, 203, 1), rgba(177, 232, 174, 1));
+        background-image: -webkit-linear-gradient(rgba(209, 254, 203, 1), rgba(177, 232, 174, 1));
+        background-image:  linear-gradient(rgba(209, 254, 203, 1), rgba(177, 232, 174, 1));
+    }
+    
+    .purple-note-top
+    {
+        background: #d4cdf3;
+        height: 30px;
+    }
+    .purple-note
+    {
+        background: rgb(221, 217, 254);
+        background-image: -moz-linear-gradient(rgba(221, 217, 254, 1), rgba(199, 185, 254, 1));
+        background-image: -ms-linear-gradient(rgba(221, 217, 254, 1), rgba(199, 185, 254, 1));
+        background-image: -o-linear-gradient(rgba(221, 217, 254, 1), rgba(199, 185, 254, 1));
+        background-image: -webkit-linear-gradient(rgba(221, 217, 254, 1), rgba(199, 185, 254, 1));
+        background-image: linear-gradient(rgba(221, 217, 254, 1), rgba(199, 185, 254, 1));
+    }
+    
+    .white-note-top
+    {
+        background: #f7f7f7;
+        height: 30px;
+    }
+    .white-note
+    {
+        background: rgb(255, 255, 255);
+        background-image: -moz-linear-gradient(rgba(255, 255, 255, 1), rgba(239, 239, 239, 1));
+        background-image: -ms-linear-gradient(rgba(255, 255, 255, 1), rgba(239, 239, 239, 1));
+        background-image: -o-linear-gradient(rgba(255, 255, 255, 1), rgba(239, 239, 239, 1));
+        background-image: -webkit-linear-gradient(rgba(255, 255, 255, 1), rgba(239, 239, 239, 1));
+        background-image: linear-gradient(rgba(255, 255, 255, 1), rgba(239, 239, 239, 1));
+    }
+    
+    .photo
+    {
+        width: 350px;
+        height: 242px;
+        border: 5px solid #eeeeee;
+        border-bottom: 18px solid #eeeeee;
+        box-shadow: 0 6px 12px #111111;
+    }
+    
+    .magnet
+    {
+        width: 60px;
+        height: 60px;
+        background-color: Blue;
+    }
+    
+    .delete-note
+    {
+        float: right;  
+    }
+    
+    .delete-note:hover
+    {
+        background-color: #eee;
+    }
+    
+    .add-note
+    {
+        float: left;  
+    }
+    
+    .add-note:hover
+    {
+        background-color: #eee;
+    }
+        
+    .change-note-colour:hover
+    {
+        background-color: #eee;
+    }
+    
+    .note-menu 
+    {
+        background-color: #ffffff;
+    }
+    
+    
+    .note-textarea
+    {
+        width:190px;
+        height:140px;
+        padding: 0;
+        margin: 0;
+        background:none;
+        resize:none;
+        color: #222222;
+        border: none;
+        font-family: Segoe Print, Comic Sans MS, Tahoma, sans-serif;
+        font-size: 14pt;
+        overflow:hidden;
+        outline:none;
+    }
