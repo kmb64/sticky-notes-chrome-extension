@@ -128,12 +128,15 @@ module.exports = function (grunt) {
         'test/spec/{,*/}*.js'
       ]
     },
-    mocha: {
-      all: {
-        options: {
-          run: true,
-          urls: ['http://localhost:<%= connect.options.port %>/index.html']
-        }
+    jasmine: {
+      options: {
+        specs: 'test/spec/**/*.js',
+        vendor: [
+
+        ]
+      },
+      test: {
+        src: ['app/scripts/**/*.js']
       }
     },
 
@@ -343,8 +346,6 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.loadNpmTasks('grunt-sass');
-
   grunt.registerTask('debug', function () {
     grunt.task.run([
       'jshint',
@@ -358,7 +359,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', [
     'connect:test',
-    'mocha'
+    'jasmine'
   ]);
 
   grunt.registerTask('build', [

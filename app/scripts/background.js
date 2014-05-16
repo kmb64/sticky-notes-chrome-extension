@@ -4,9 +4,9 @@ chrome.runtime.onInstalled.addListener(function (details) {
   console.log('previousVersion', details.previousVersion);
 });
 
-chrome.browserAction.setBadgeText({text: '\'hi'});
+chrome.browserAction.setBadgeText({text: '\'kk'});
 
 chrome.browserAction.onClicked.addListener(function () {
-  chrome.browserAction.setBadgeText({text: '\'bye'});
+  chrome.tabs.insertCSS({file: 'styles/stickynotes.css'});
   chrome.tabs.executeScript(null, {file: 'scripts/stickynotes.js'});
 });
