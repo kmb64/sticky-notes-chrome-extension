@@ -17,6 +17,7 @@ module.exports = function (grunt) {
 
   // Configurable paths
   var config = {
+    tmp : '.tmp',
     app: 'app',
     dist: 'dist',
     manifest: grunt.file.readJSON('app/manifest.json')
@@ -55,11 +56,18 @@ module.exports = function (grunt) {
           livereload: '<%= connect.options.livereload %>'
         },
         files: [
-          '<%= config.app %>/*.html',
-          '<%= config.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-          '<%= config.app %>/manifest.json',
-          '<%= config.app %>/_locales/{,*/}*.json'
+          '<%= config.tmp %>/*.html',
+          '<%= config.tmp %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+          '<%= config.tmp %>/manifest.json',
+          '<%= config.tmp %>/_locales/{,*/}*.json'
         ]
+      },
+      serve: {
+        files: [
+          '<%= config.app %>/{,*/}*.html',
+          '<%= config.app %>/scripts/*.js'
+        ],
+        tasks: ['copy:serve']
       }
     },
 
@@ -75,7 +83,7 @@ module.exports = function (grunt) {
         options: {
           open: false,
           base: [
-            '<%= config.app %>'
+            '<%= config.tmp %>'
           ]
         }
       },
@@ -236,6 +244,25 @@ module.exports = function (grunt) {
 
     // Copies remaining files to places other tasks can use
     copy: {
+      serve: {
+        files : [
+          {
+            expand: true,
+            cwd: '<%= config.app %>',
+            dest: '<%= config.tmp %>',
+            src: [
+              '*.{ico,png,txt}',
+              'images/{,*/}*.{webp,gif,png}',
+              '{,*/}*.html',
+              'styles/{,*/}*.css',
+              'styles/fonts/{,*/}*.*',
+              '_locales/{,*/}*.json',
+              'scripts/{,*/}*.js',
+              'manifest.json'
+            ]
+          }
+        ]
+      },
       dist: {
         files: [
           {
@@ -310,7 +337,7 @@ module.exports = function (grunt) {
         },
         files: {
           // Only does single files - no concatenating multiple files into a single file.
-          '<%= config.app %>/styles/stickynotes.css' : '<%= config.app %>/styles/stickynotes.scss'
+          '<%= config.tmp %>/styles/stickynotes.css' : '<%= config.app %>/styles/stickynotes.scss'
         }
       }
     }
@@ -321,6 +348,7 @@ module.exports = function (grunt) {
   grunt.registerTask('debug', function () {
     grunt.task.run([
       'jshint',
+      'copy:serve',
       'sass:serve',
       'concurrent:chrome',
       'connect:chrome',
