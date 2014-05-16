@@ -44,8 +44,8 @@ module.exports = function (grunt) {
         files: ['Gruntfile.js']
       },
       styles: {
-        files: ['<%= config.app %>/styles/{,*/}*.css'],
-        tasks: [],
+        files: ['<%= config.app %>/styles/{,*/}*.scss'],
+        tasks: ['sass:serve'],
         options: {
           livereload: true
         }
@@ -300,12 +300,28 @@ module.exports = function (grunt) {
           }
         ]
       }
+    },
+    sass: {
+      serve: {
+        options: {
+          sourceComments: 'normal',
+          // Pickup generated files (eg. _sprite.scss)
+          includePaths: ['']
+        },
+        files: {
+          // Only does single files - no concatenating multiple files into a single file.
+          '<%= config.app %>/styles/stickynotes.css' : '<%= config.app %>/styles/stickynotes.scss'
+        }
+      }
     }
   });
+
+  grunt.loadNpmTasks('grunt-sass');
 
   grunt.registerTask('debug', function () {
     grunt.task.run([
       'jshint',
+      'sass:serve',
       'concurrent:chrome',
       'connect:chrome',
       'watch'
