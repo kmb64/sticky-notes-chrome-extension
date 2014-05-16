@@ -71,20 +71,6 @@
     background-image: linear-gradient(rgba(255, 255, 255, 1), rgba(239, 239, 239, 1));
 }
 
-.photo {
-    width: 350px;
-    height: 242px;
-    border: 5px solid #eeeeee;
-    border-bottom: 18px solid #eeeeee;
-    box-shadow: 0 6px 12px #111111;
-}
-
-.magnet {
-    width: 60px;
-    height: 60px;
-    background-color: Blue;
-}
-
 .delete-note {
     float: right;
 }
