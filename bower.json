@@ -2,5 +2,8 @@
   "name": "sticky-notes",
   "version": "0.0.0",
   "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {
+    "jquery-ui": "~1.10.4",
+    "jquery": "~2.1.1"
+  }
 }
