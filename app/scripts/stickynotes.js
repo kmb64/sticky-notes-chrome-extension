@@ -1,15 +1,34 @@
+/*global $, jQuery*/
+
 'use strict';
 
-var note =
-  '<div class="note pink-note">' +
-  '<div class="pink-note-top"></div>' +
-  '<textarea class="note-textarea" value=""></textarea>' +
-  '</div>';
+var StickyNotes = (function($){
 
-var appendNote = function (note, document) {
-  document.body.insertAdjacentHTML('beforeend', note);
-};
+  var create = function(colour) {
+    return '<div class="note ' + colour +'"></div>';
+  };
 
-appendNote(note, document);
+  var add = function($elm, stickyNote) {
+    $elm.append($(stickyNote).draggable());
+  };
+
+  return {
+    create : create,
+    add : add
+  };
+}(jQuery));
+
+var $body = $('body');
+
+var note = StickyNotes.create('pink');
+
+StickyNotes.add($body, note);
+
+
+
+
+
+
+
 
 

@@ -261,6 +261,8 @@ module.exports = function (grunt) {
               'styles/fonts/{,*/}*.*',
               '_locales/{,*/}*.json',
               'scripts/{,*/}*.js',
+              'bower_components/jquery/dist/jquery.js',
+              'bower_components/jquery-ui/ui/jquery-ui.js',
               'manifest.json'
             ]
           }

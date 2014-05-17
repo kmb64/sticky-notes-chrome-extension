@@ -1,31 +1,36 @@
-/*global describe, beforeEach, it, appendNote, spyOn, expect*/
+/*global describe, beforeEach, it, StickyNotes, spyOn, expect, $*/
 
 'use strict';
 
 describe('Sticky notes', function () {
 
-  var note,
-    document;
+  var $body,
+    $note;
 
   beforeEach(function () {
-    note =
-      '<div class="note pink-note">' +
-      '<div class="pink-note-top"></div>' +
-      '<textarea class="note-textarea" value=""></textarea>' +
-      '</div>';
-
-    document = {
-      body : {
-        insertAdjacentHTML : function(){}
-      }
+    $body = {
+      append : function(){}
     };
-
+    $note = {};
   });
 
-  it('should append a note to the document', function () {
-    spyOn(document.body, 'insertAdjacentHTML');
-    appendNote(note, document);
-    expect(document.body.insertAdjacentHTML).toHaveBeenCalledWith('beforeend', note);
+  it('should construct a coloured sticky note', function(){
+    var expected ='<div class="note pink"></div>';
+    expect(StickyNotes.create('pink')).toBe(expected);
   });
 
+  it('should add a sticky note to a web page', function(){
+    var spy = spyOn($body, 'append');
+
+    var note = StickyNotes.create('pink');
+    StickyNotes.add($body, note);
+
+    expect(spy).toHaveBeenCalledWith($(note).draggable());
+  });
+
+  it('it should allow the sticky note to be draggable when it\'s been added to the page', function(){
+    var spy = spyOn($.fn, 'draggable');
+    StickyNotes.add($body, $note);
+    expect(spy).toHaveBeenCalled();
+  });
 });
