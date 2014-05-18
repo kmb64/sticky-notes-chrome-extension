@@ -11,7 +11,12 @@
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
-      "css": ["styles/stickyNotes.css"],
+      "css": [
+        "styles/stickyNotes.css",
+      ],
+      "images" : [
+        "styles/images/ui-icons_222222_256x240.png"
+      ],
       "js": [
         "bower_components/jquery/dist/jquery.js",
         "bower_components/jquery-ui/ui/jquery-ui.js"
@@ -35,5 +40,9 @@
     "tabs",
     "http://*/*",
     "https://*/*"
-  ]
+  ],
+  "web_accessible_resources":
+    [
+      "styles/images/*.png"
+    ]
 }

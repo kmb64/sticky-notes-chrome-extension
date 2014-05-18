@@ -13,8 +13,15 @@ describe('Sticky notes', function () {
   });
 
   it('should construct a coloured sticky note', function(){
-    var expected = $('<div class="note pink"><textarea class="textarea" value=""></textarea></div>');
-    expect(StickyNotes.create('pink').html()).toBe(expected.html());
+
+    var expected = $('<div class="note pink">' +
+      '<div class="top">' +
+      '<div class="add icon plus"></div>' +
+      '<div class="delete icon close"></div>' +
+      '</div>' +
+      '<textarea class="textarea" value=""></textarea>' +
+      '</div>').html();
+    expect(StickyNotes.create('pink').html()).toBe(expected);
   });
 
   it('should add a sticky note to a web page', function(){
@@ -26,8 +33,17 @@ describe('Sticky notes', function () {
     expect(spy).toHaveBeenCalledWith($note.draggable());
   });
 
-  it('it should allow the sticky note to be draggable when it\'s been added to the page', function(){
+  it('it should make the sticky note draggable', function(){
     var spy = spyOn($.fn, 'draggable');
+
+    var $note = StickyNotes.create('pink');
+    StickyNotes.add($body, $note);
+
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('it should make the sticky note resizable', function(){
+    var spy = spyOn($.fn, 'resizable');
 
     var $note = StickyNotes.create('pink');
     StickyNotes.add($body, $note);

@@ -24,12 +24,40 @@
   background-color: rgb(216, 242, 250);
   background-image: -webkit-linear-gradient(top, rgb(216, 242, 250), rgb(184, 219, 244));
   background-image: linear-gradient(top, rgb(216, 242, 250), rgb(184, 219, 244));
-
 }
 
-.pink-note-top {
+.note .top {
   background: #f1c3f1;
   height: 30px;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  background-image: url('chrome-extension://__MSG_@@extension_id__/styles/images/ui-icons_222222_256x240.png');
+  &:hover {
+    background-color: #fff;
+  }
+  &.plus {
+    background-position: -16px -128px;
+    float: left;
+  }
+  &.close {
+    background-position: -80px -128px;
+    float: right;
+  }
+  &.drag {
+    background-position: -64px -224px;
+  }
+}
+
+.ui-icon {
+  width: 16px;
+  height: 16px;
+  background-image: url('chrome-extension://__MSG_@@extension_id__/styles/images/ui-icons_222222_256x240.png');
+  &.ui-icon-gripsmall-diagonal-se {
+    background-position: -64px -224px;
+  }
 }
 
 .note.pink {
