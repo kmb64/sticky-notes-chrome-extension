@@ -32,6 +32,6 @@ describe('Sticky notes', function () {
     var $note = StickyNotes.create('pink');
     StickyNotes.add($body, $note);
 
-    expect(spy).not.toHaveBeenCalled();
+    expect(spy).toHaveBeenCalled();
   });
 });
