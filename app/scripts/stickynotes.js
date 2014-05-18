@@ -1,32 +1,58 @@
-/*global $, jQuery*/
+/*global jQuery*/
 
 'use strict';
 
 var StickyNotes = (function($){
 
-  var create = function(colour) {
-    return $('<div class="note ' + colour +'">' +
-      '<div class="top">' +
-      '<div class="add icon plus"></div>' +
-      '<div class="delete icon close"></div>' +
-      '</div>' +
-      '<textarea class="textarea" value=""></textarea>' +
-      '</div>');
+  var $body = $('body');
+
+  var NOTE_HTML = '<div class="note">' +
+    '<div class="top">' +
+    '<div class="add icon plus"></div>' +
+    '<div class="delete icon close"></div>' +
+    '</div>' +
+    '<textarea class="textarea" value=""></textarea>' +
+    '</div>';
+
+  var colourNote = function($note, colour) {
+    $note.addClass(colour);
+    $note.colour = colour;
   };
 
-  var add = function($elm, $note) {
+  var create = function(colour) {
+    var $note = $(NOTE_HTML);
 
-    $elm.append($note);
+    colourNote($note, colour);
+
+    var $delete  = $note.find('.icon.delete');
+    $delete.click(function(){
+      deleteNote($note);
+    });
+
+    var $add = $note.find('.icon.add');
+    $add.click(function(){
+      add($body, create($note.colour));
+    });
+
     $note.draggable();
     $note.resizable();
+
+    return $note;
+  };
+
+  var add = function($note) {
+    $body.append($note);
     $note.css({
+      'position': 'absolute',
       'left' : 20,
       'top' : 20
     });
   };
 
   var deleteNote = function($note){
-    $note.remove();
+    $note.fadeOut(300, function(){
+      $note.remove();
+    });
   };
 
   return {
@@ -36,11 +62,9 @@ var StickyNotes = (function($){
   };
 }(jQuery));
 
-var $body = $('body');
+var $note = StickyNotes.create('pink');
 
-var note = StickyNotes.create('pink');
-
-StickyNotes.add($body, note);
+StickyNotes.add($note);
 
 
 

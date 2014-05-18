@@ -14,30 +14,33 @@ describe('Sticky notes', function () {
 
   it('should construct a coloured sticky note', function(){
 
-    var expected = $('<div class="note pink">' +
+    var expected = $('<div class="note pink ui-draggable ui-resizable">' +
       '<div class="top">' +
       '<div class="add icon plus"></div>' +
       '<div class="delete icon close"></div>' +
       '</div>' +
       '<textarea class="textarea" value=""></textarea>' +
+      '<div class="ui-resizable-handle ui-resizable-e" style="z-index: 90; display: block;"></div>' +
+      '<div class="ui-resizable-handle ui-resizable-s" style="z-index: 90; display: block;"></div>' +
+      '<div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90; display: block;"></div>' +
       '</div>').html();
-    expect(StickyNotes.create('pink').html()).toBe(expected);
+    expect(StickyNotes.create('pink').html()).toEqual(expected);
   });
 
   it('should add a sticky note to a web page', function(){
-    var spy = spyOn($body, 'append');
+    var spy = spyOn($.fn, 'append');
 
     var $note = StickyNotes.create('pink');
-    StickyNotes.add($body, $note);
+    StickyNotes.add($note);
 
-    expect(spy).toHaveBeenCalledWith($note.draggable());
+    expect(spy).toHaveBeenCalledWith($note);
   });
 
   it('should make the sticky note draggable', function(){
     var spy = spyOn($.fn, 'draggable');
 
     var $note = StickyNotes.create('pink');
-    StickyNotes.add($body, $note);
+    StickyNotes.add($note);
 
     expect(spy).toHaveBeenCalled();
   });
@@ -46,7 +49,7 @@ describe('Sticky notes', function () {
     var spy = spyOn($.fn, 'resizable');
 
     var $note = StickyNotes.create('pink');
-    StickyNotes.add($body, $note);
+    StickyNotes.add($note);
 
     expect(spy).toHaveBeenCalled();
   });
@@ -54,9 +57,7 @@ describe('Sticky notes', function () {
   it('should be able to delete a sticky note', function(){
     var spy = spyOn($.fn, 'remove');
 
-    var $note = StickyNotes.create('pink');
-    StickyNotes.add($body, $note);
-    StickyNotes.deleteNote($note);
+    StickyNotes.deleteNote($('<div></div>'));
 
     expect(spy).toHaveBeenCalled();
   });
@@ -65,9 +66,9 @@ describe('Sticky notes', function () {
     var spy = spyOn($.fn, 'css');
 
     var $note = StickyNotes.create('pink');
-    StickyNotes.add($body, $note);
+    StickyNotes.add($note);
 
-    expect(spy).toHaveBeenCalledWith({'left' : 20, 'top' : 20});
+    expect(spy).toHaveBeenCalledWith({'position': 'absolute','left' : 20, 'top' : 20});
   });
 
 });
