@@ -31,7 +31,7 @@ var StickyNotes = (function($){
 
     var $add = $note.find('.icon.add');
     $add.click(function(){
-      add($body, create($note.colour));
+      add(create($note.colour));
     });
 
     $note.draggable();
