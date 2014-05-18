@@ -132,7 +132,8 @@ module.exports = function (grunt) {
       options: {
         specs: 'test/spec/**/*.js',
         vendor: [
-
+          "app/bower_components/jquery/dist/jquery.js",
+          "app/bower_components/jquery-ui/ui/jquery-ui.js"
         ]
       },
       test: {

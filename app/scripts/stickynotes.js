@@ -5,11 +5,11 @@
 var StickyNotes = (function($){
 
   var create = function(colour) {
-    return '<div class="note ' + colour +'"></div>';
+    return $('<div class="note ' + colour +'"></div>');
   };
 
-  var add = function($elm, stickyNote) {
-    $elm.append($(stickyNote).draggable());
+  var add = function($elm, $note) {
+    $elm.append($note.draggable());
   };
 
   return {
