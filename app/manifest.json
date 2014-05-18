@@ -12,10 +12,7 @@
     {
       "matches": ["http://*/*", "https://*/*"],
       "css": [
-        "styles/stickyNotes.css",
-      ],
-      "images" : [
-        "styles/images/ui-icons_222222_256x240.png"
+        "styles/stickyNotes.css"
       ],
       "js": [
         "bower_components/jquery/dist/jquery.js",

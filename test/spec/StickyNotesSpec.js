@@ -33,7 +33,7 @@ describe('Sticky notes', function () {
     expect(spy).toHaveBeenCalledWith($note.draggable());
   });
 
-  it('it should make the sticky note draggable', function(){
+  it('should make the sticky note draggable', function(){
     var spy = spyOn($.fn, 'draggable');
 
     var $note = StickyNotes.create('pink');
@@ -42,7 +42,7 @@ describe('Sticky notes', function () {
     expect(spy).toHaveBeenCalled();
   });
 
-  it('it should make the sticky note resizable', function(){
+  it('should make the sticky note resizable', function(){
     var spy = spyOn($.fn, 'resizable');
 
     var $note = StickyNotes.create('pink');
@@ -50,4 +50,24 @@ describe('Sticky notes', function () {
 
     expect(spy).toHaveBeenCalled();
   });
+
+  it('should be able to delete a sticky note', function(){
+    var spy = spyOn($.fn, 'remove');
+
+    var $note = StickyNotes.create('pink');
+    StickyNotes.add($body, $note);
+    StickyNotes.deleteNote($note);
+
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should position a sticky note correctly on the page', function(){
+    var spy = spyOn($.fn, 'css');
+
+    var $note = StickyNotes.create('pink');
+    StickyNotes.add($body, $note);
+
+    expect(spy).toHaveBeenCalledWith({'left' : 20, 'top' : 20});
+  });
+
 });

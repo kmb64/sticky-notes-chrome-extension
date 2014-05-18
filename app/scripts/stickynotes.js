@@ -15,14 +15,24 @@ var StickyNotes = (function($){
   };
 
   var add = function($elm, $note) {
+
     $elm.append($note);
     $note.draggable();
     $note.resizable();
+    $note.css({
+      'left' : 20,
+      'top' : 20
+    });
+  };
+
+  var deleteNote = function($note){
+    $note.remove();
   };
 
   return {
     create : create,
-    add : add
+    add : add,
+    deleteNote : deleteNote
   };
 }(jQuery));
 
