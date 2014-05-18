@@ -7,9 +7,5 @@ chrome.runtime.onInstalled.addListener(function (details) {
 chrome.browserAction.setBadgeText({text: '\'kk'});
 
 chrome.browserAction.onClicked.addListener(function () {
-  chrome.tabs.insertCSS({file: 'styles/stickyNotes.css'});
-
-//  chrome.tabs.executeScript(null, {file: 'bower_components/jquery/dist/jquery.js'});
-
-  chrome.tabs.executeScript(null, {file: 'scripts/stickNotes.js'});
+  chrome.tabs.executeScript(null, {file: 'scripts/stickyNotes.js'});
 });

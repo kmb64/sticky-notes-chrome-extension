@@ -13,7 +13,7 @@ describe('Sticky notes', function () {
   });
 
   it('should construct a coloured sticky note', function(){
-    var expected = $('<div class="note pink"></div>');
+    var expected = $('<div class="note pink"><textarea class="textarea" value=""></textarea></div>');
     expect(StickyNotes.create('pink').html()).toBe(expected.html());
   });
 

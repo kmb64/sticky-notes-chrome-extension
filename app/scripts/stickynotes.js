@@ -5,7 +5,7 @@
 var StickyNotes = (function($){
 
   var create = function(colour) {
-    return $('<div class="note ' + colour +'"></div>');
+    return $('<div class="note ' + colour +'"><textarea class="textarea" value=""></textarea></div>');
   };
 
   var add = function($elm, $note) {

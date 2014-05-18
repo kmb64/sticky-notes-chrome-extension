@@ -132,8 +132,8 @@ module.exports = function (grunt) {
       options: {
         specs: 'test/spec/**/*.js',
         vendor: [
-          "app/bower_components/jquery/dist/jquery.js",
-          "app/bower_components/jquery-ui/ui/jquery-ui.js"
+          'app/bower_components/jquery/dist/jquery.js',
+          'app/bower_components/jquery-ui/ui/jquery-ui.js'
         ]
       },
       test: {
@@ -343,7 +343,7 @@ module.exports = function (grunt) {
         },
         files: {
           // Only does single files - no concatenating multiple files into a single file.
-          '<%= config.tmp %>/styles/stickynotes.css' : '<%= config.app %>/styles/stickynotes.scss'
+          '<%= config.tmp %>/styles/stickyNotes.css' : '<%= config.app %>/styles/stickyNotes.scss'
         }
       }
     }
