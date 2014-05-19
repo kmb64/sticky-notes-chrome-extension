@@ -4,12 +4,7 @@
 
 describe('Sticky notes', function () {
 
-  var $body;
-
   beforeEach(function () {
-    $body = {
-      append : function(){}
-    };
   });
 
   it('should construct a coloured sticky note', function(){
