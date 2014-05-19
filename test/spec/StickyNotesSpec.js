@@ -9,17 +9,11 @@ describe('Sticky notes', function () {
 
   it('should construct a coloured sticky note', function(){
 
-    var expected = '<div class="top">' +
-      '<div class="add icon plus">' +
-      '</div><div class="delete icon close"></div>' +
-      '</div>' +
-      '<textarea class="textarea" value=""></textarea>' +
-      '<div class="ui-resizable-handle ui-resizable-e" style="z-index: 90; display: block;"></div>' +
-      '<div class="ui-resizable-handle ui-resizable-s" style="z-index: 90; display: block;"></div>' +
-      '<div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90; display: block;">' +
-      '</div>';
+    var $note = StickyNotes.create('pink');
 
-    expect(StickyNotes.create('pink').html()).toEqual(expected);
+    expect($note.hasClass('note')).toBeTruthy();
+    expect($note.hasClass('pink')).toBeTruthy();
+    expect($note.find('textarea').length).toBeGreaterThan(0);
   });
 
   it('should add a sticky note to a web page', function(){
@@ -33,27 +27,19 @@ describe('Sticky notes', function () {
 
   it('should make the sticky note draggable', function(){
     var spy = spyOn($.fn, 'draggable');
-
-    var $note = StickyNotes.create('pink');
-    StickyNotes.add($note);
-
+    StickyNotes.create('pink');
     expect(spy).toHaveBeenCalled();
   });
 
   it('should make the sticky note resizable', function(){
     var spy = spyOn($.fn, 'resizable');
-
-    var $note = StickyNotes.create('pink');
-    StickyNotes.add($note);
-
+    StickyNotes.create('pink');
     expect(spy).toHaveBeenCalled();
   });
 
   it('should be able to delete a sticky note', function(){
     var spy = spyOn($.fn, 'remove');
-
     StickyNotes.deleteNote($('<div></div>'));
-
     expect(spy).toHaveBeenCalled();
   });
 
