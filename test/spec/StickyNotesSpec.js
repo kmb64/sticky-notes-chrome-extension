@@ -14,16 +14,16 @@ describe('Sticky notes', function () {
 
   it('should construct a coloured sticky note', function(){
 
-    var expected = $('<div class="note pink ui-draggable ui-resizable">' +
-      '<div class="top">' +
-      '<div class="add icon plus"></div>' +
-      '<div class="delete icon close"></div>' +
+    var expected = '<div class="top">' +
+      '<div class="add icon plus">' +
+      '</div><div class="delete icon close"></div>' +
       '</div>' +
       '<textarea class="textarea" value=""></textarea>' +
       '<div class="ui-resizable-handle ui-resizable-e" style="z-index: 90; display: block;"></div>' +
       '<div class="ui-resizable-handle ui-resizable-s" style="z-index: 90; display: block;"></div>' +
-      '<div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90; display: block;"></div>' +
-      '</div>').html();
+      '<div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90; display: block;">' +
+      '</div>';
+
     expect(StickyNotes.create('pink').html()).toEqual(expected);
   });
 
@@ -69,6 +69,13 @@ describe('Sticky notes', function () {
     StickyNotes.add($note);
 
     expect(spy).toHaveBeenCalledWith({'position': 'absolute','left' : 20, 'top' : 20});
+  });
+
+  it('should colour a sticky note', function(){
+    var $note = $('<div></div>');
+    StickyNotes.colourNote($note, 'pink');
+    expect($note.hasClass('pink')).toBeTruthy();
+    expect($note.colour).toBe('pink');
   });
 
 });

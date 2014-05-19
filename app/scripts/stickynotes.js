@@ -58,7 +58,8 @@ var StickyNotes = (function($){
   return {
     create : create,
     add : add,
-    deleteNote : deleteNote
+    deleteNote : deleteNote,
+    colourNote : colourNote
   };
 }(jQuery));
 
