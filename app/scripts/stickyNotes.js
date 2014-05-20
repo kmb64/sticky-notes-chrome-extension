@@ -1,4 +1,4 @@
-/*global jQuery*/
+/*global jQuery, chrome*/
 
 'use strict';
 
@@ -20,21 +20,19 @@ var StickyNotes = (function($){
     $note.colour = colour;
   };
 
-  var create = function(colour) {
+  var createNote = function(colour) {
     var $note = $(NOTE_HTML);
 
     colourNote($note, colour);
 
     var $delete  = $note.find('.kbsn-icon.delete');
     $delete.click(function(){
-      if(confirm('Are you sure you want do delete this sticky note?')) {
-        deleteNote($note);
-      }
+      deleteNote($note);
     });
 
     var $add = $note.find('.kbsn-icon.add');
     $add.click(function(){
-      add(create($note.colour));
+      addNote(createNote($note.colour));
     });
 
     $note.draggable();
@@ -43,7 +41,7 @@ var StickyNotes = (function($){
     return $note;
   };
 
-  var add = function($note) {
+  var addNote = function($note) {
     $body.append($note);
     $note.css({
       'position': 'absolute',
@@ -58,17 +56,47 @@ var StickyNotes = (function($){
     });
   };
 
+  var saveNote = function() {
+    chrome.storage.sync.set({'value': 'karl'}, function() {
+      // Notify that we saved.
+      console.log('Settings saved');
+      loadNote('value')
+    });
+
+    chrome.tabs.onActivated.addListener(function(){
+      chrome.tabs.query('active', function(active) {
+        if(active){
+          alert('hi');
+        }
+      });
+    });
+
+  };
+
+  var loadNote = function(key) {
+    chrome.storage.sync.get(key, function(data) {
+      // Notify that we saved.
+      console.log('Settings loaded' + data);
+      console.log(data);
+    });
+
+
+
+  };
+
   return {
-    create : create,
-    add : add,
+    createNote : createNote,
+    addNote : addNote,
     deleteNote : deleteNote,
-    colourNote : colourNote
+    colourNote : colourNote,
+    saveNote : saveNote
   };
 }(jQuery));
 
-var $note = StickyNotes.create('pink');
+var $note = StickyNotes.createNote('pink');
 
-StickyNotes.add($note);
+StickyNotes.addNote($note);
+StickyNotes.saveNote();
 
 
 

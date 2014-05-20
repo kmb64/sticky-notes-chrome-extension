@@ -36,7 +36,8 @@
   "permissions": [
     "tabs",
     "http://*/*",
-    "https://*/*"
+    "https://*/*",
+    "storage"
   ],
   "web_accessible_resources":
     [

@@ -9,7 +9,7 @@ describe('Sticky notes', function () {
 
   it('should construct a coloured sticky note', function(){
 
-    var $note = StickyNotes.create('pink');
+    var $note = StickyNotes.createNote('pink');
 
     expect($note.hasClass('kbsn-sticky-note')).toBeTruthy();
     expect($note.hasClass('kbsn-pink')).toBeTruthy();
@@ -19,21 +19,21 @@ describe('Sticky notes', function () {
   it('should add a sticky note to a web page', function(){
     var spy = spyOn($.fn, 'append');
 
-    var $note = StickyNotes.create('pink');
-    StickyNotes.add($note);
+    var $note = StickyNotes.createNote('pink');
+    StickyNotes.addNote($note);
 
     expect(spy).toHaveBeenCalledWith($note);
   });
 
   it('should make the sticky note draggable', function(){
     var spy = spyOn($.fn, 'draggable');
-    StickyNotes.create('pink');
+    StickyNotes.createNote('pink');
     expect(spy).toHaveBeenCalled();
   });
 
   it('should make the sticky note resizable', function(){
     var spy = spyOn($.fn, 'resizable');
-    StickyNotes.create('pink');
+    StickyNotes.createNote('pink');
     expect(spy).toHaveBeenCalled();
   });
 
@@ -46,8 +46,8 @@ describe('Sticky notes', function () {
   it('should position a sticky note correctly on the page', function(){
     var spy = spyOn($.fn, 'css');
 
-    var $note = StickyNotes.create('pink');
-    StickyNotes.add($note);
+    var $note = StickyNotes.createNote('pink');
+    StickyNotes.addNote($note);
 
     expect(spy).toHaveBeenCalledWith({'position': 'absolute','left' : 20, 'top' : 20});
   });
