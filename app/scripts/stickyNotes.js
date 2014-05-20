@@ -4,18 +4,19 @@
 
 var StickyNotes = (function($){
 
+  var CSS_CLASS_PREFIX = 'kbsn';
   var $body = $('body');
 
-  var NOTE_HTML = '<div class="note">' +
-    '<div class="top">' +
-    '<div class="add icon plus"></div>' +
-    '<div class="delete icon close"></div>' +
+  var NOTE_HTML = '<div class="kbsn-sticky-note">' +
+    '<div class="kbsn-top">' +
+    '<div class="add kbsn-icon plus"></div>' +
+    '<div class="delete kbsn-icon close"></div>' +
     '</div>' +
-    '<textarea class="textarea" value=""></textarea>' +
+    '<textarea class="kbsn-textarea" value=""></textarea>' +
     '</div>';
 
   var colourNote = function($note, colour) {
-    $note.addClass(colour);
+    $note.addClass(CSS_CLASS_PREFIX + '-' + colour);
     $note.colour = colour;
   };
 
@@ -24,12 +25,12 @@ var StickyNotes = (function($){
 
     colourNote($note, colour);
 
-    var $delete  = $note.find('.icon.delete');
+    var $delete  = $note.find('.kbsn-icon.delete');
     $delete.click(function(){
       deleteNote($note);
     });
 
-    var $add = $note.find('.icon.add');
+    var $add = $note.find('.kbsn-icon.add');
     $add.click(function(){
       add(create($note.colour));
     });

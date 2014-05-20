@@ -1,37 +1,150 @@
-﻿.note {
+﻿@mixin sticky-note-bg($lightcolour, $darkcolour) {
+  background: $lightcolour;
+  background-image: -webkit-linear-gradient(top, $lightcolour, $darkcolour);
+  background-image: linear-gradient(top, $lightcolour, $darkcolour);
+}
+
+//Sticky note colours:
+$darkpink : rgba(235, 174, 235, 1);
+$toppink: #f1c3f1;
+$lightpink : rgba(245, 210, 245, 1);
+
+$darkyellow : rgb(252, 249, 162);
+$topyellow: #f8f7b6;
+$lightyellow : rgb(253, 253, 203);
+
+$darkblue : rgb(184, 219, 244);
+$topblue : #c9ecf8;
+$lightblue : rgb(216, 242, 250);
+
+$darkwhite : rgba(239, 239, 239, 1);
+$topwhite : #f7f7f7;
+$lightwhite : rgba(255, 255, 255, 1);
+
+$darkpurple : rgba(199, 185, 254, 1);
+$toppurple: #d4cdf3;
+$lightpurple : rgba(221, 217, 254, 1);
+
+$darkgreen : rgba(177, 232, 174, 1);
+$topgreen : #c5f7c1;
+$lightgreen : rgba(209, 254, 203, 1);
+
+
+.kbsn-sticky-note {
   position: absolute;
-  box-shadow: 0 6px 12px #111111;
+  //box-shadow: 1px 3px 3px 2px #111111;
+  -webkit-box-shadow: 1px 5px 3px 0 rgba(128,115,112,1);
+  box-shadow: 1px 5px 3px 0 rgba(128,115,112,1);
   z-index: 9999;
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  height: 200px;
+
+  .kbsn-top {
+    height: 30px;
+    margin: 0;
+    padding: 0;
+  }
+
+  &.kbsn-yellow {
+    @include sticky-note-bg($lightyellow, $darkyellow);
+    .kbsn-top {
+      background: $topyellow;
+    }
+  }
+
+  &.kbsn-blue {
+    @include sticky-note-bg($lightblue, $darkblue);
+    .kbsn-top {
+      background: $darkblue;
+    }
+  }
+
+  &.kbsn-pink {
+    @include sticky-note-bg($lightpink, $darkpink);
+    .kbsn-top {
+      background: $toppink;
+    }
+  }
+
+  &.kbsn-purple {
+    @include sticky-note-bg($lightpurple, $darkpurple);
+    .kbsn-top {
+      background: $toppurple;
+    }
+  }
+
+  .kbsn-white {
+    @include sticky-note-bg($lightwhite, $darkwhite);
+    .kbsn-top {
+      background: $topwhite;
+    }
+  }
+  &.kbsn-green {
+    @include sticky-note-bg($lightgreen, $darkgreen);
+    .kbsn-top {
+      background: #c5f7c1;
+    }
+  }
+
+  .kbsn-textarea {
+    width: 190px;
+    height: 140px;
+    padding: 0;
+    margin: 0;
+    background: none;
+    resize: none;
+    color: #222222;
+    border: none;
+    font-family: Segoe Print, Comic Sans MS, Tahoma, sans-serif;
+    font-size: 14pt;
+    overflow: hidden;
+    outline: none;
+    box-shadow: none;
+  }
+
+  .ui-icon {
+    width: 16px;
+    height: 16px;
+    background-image: url('chrome-extension://__MSG_@@extension_id__/styles/images/ui-icons_222222_256x240.png');
+    &.ui-icon-gripsmall-diagonal-se {
+      background-position: -64px -224px;
+    }
+  }
+
+  .ui-resizable-handle {
+    position: absolute;
+    font-size: 0.1px;
+    display: block;
+  }
+
+  .ui-resizable-e {
+    cursor: e-resize;
+    width: 7px;
+    right: -5px;
+    top: 0;
+    height: 100%;
+  }
+
+  .ui-resizable-se {
+    cursor: se-resize;
+    width: 12px;
+    height: 12px;
+    right: 1px;
+    bottom: 1px;
+  }
+
+  .ui-resizable-s {
+    cursor: s-resize;
+    height: 7px;
+    width: 100%;
+    bottom: -5px;
+    left: 0;
+  }
 }
 
-.yellow-note-top {
-  background: #f8f7b6;
-  height: 30px;
-}
-
-.yellow-note {
-  background: rgb(253, 253, 203);
-  background-image: -webkit-linear-gradient(top, rgb(253, 253, 203), rgb(252, 249, 162));
-  background-image: linear-gradient(top, rgb(253, 253, 203), rgb(252, 249, 162));
-}
-
-.blue-note-top {
-  background: #c9ecf8;
-  height: 30px;
-}
-
-.blue-note {
-  background-color: rgb(216, 242, 250);
-  background-image: -webkit-linear-gradient(top, rgb(216, 242, 250), rgb(184, 219, 244));
-  background-image: linear-gradient(top, rgb(216, 242, 250), rgb(184, 219, 244));
-}
-
-.note .top {
-  background: #f1c3f1;
-  height: 30px;
-}
-
-.icon {
+.kbsn-icon {
   width: 16px;
   height: 16px;
   background-image: url('chrome-extension://__MSG_@@extension_id__/styles/images/ui-icons_222222_256x240.png');
@@ -51,123 +164,5 @@
   }
 }
 
-.ui-icon {
-  width: 16px;
-  height: 16px;
-  background-image: url('chrome-extension://__MSG_@@extension_id__/styles/images/ui-icons_222222_256x240.png');
-  &.ui-icon-gripsmall-diagonal-se {
-    background-position: -64px -224px;
-  }
-}
 
-.ui-resizable-handle {
-  position: absolute;
-  font-size: 0.1px;
-  display: block;
-}
 
-.ui-resizable-e {
-  cursor: e-resize;
-  width: 7px;
-  right: -5px;
-  top: 0;
-  height: 100%;
-}
-
-.ui-resizable-se {
-  cursor: se-resize;
-  width: 12px;
-  height: 12px;
-  right: 1px;
-  bottom: 1px;
-}
-
-.ui-resizable-s {
-  cursor: s-resize;
-  height: 7px;
-  width: 100%;
-  bottom: -5px;
-  left: 0;
-}
-
-.note.pink {
-  background: rgb(245, 210, 245);
-  background-image: -webkit-linear-gradient(rgba(245, 210, 245, 1), rgba(235, 174, 235, 1));
-  background-image: linear-gradient(rgba(245, 210, 245, 1), rgba(235, 174, 235, 1));
-  height: 200px;
-  width: 200px;
-
-}
-
-.green-note-top {
-  background: #c5f7c1;
-  height: 30px;
-}
-
-.green-note {
-  background: rgb(209, 254, 203);
-  background-image: -webkit-linear-gradient(rgba(209, 254, 203, 1), rgba(177, 232, 174, 1));
-  background-image: linear-gradient(rgba(209, 254, 203, 1), rgba(177, 232, 174, 1));
-}
-
-.purple-note-top {
-  background: #d4cdf3;
-  height: 30px;
-}
-
-.purple-note {
-  background: rgb(221, 217, 254);
-  background-image: -webkit-linear-gradient(rgba(221, 217, 254, 1), rgba(199, 185, 254, 1));
-  background-image: linear-gradient(rgba(221, 217, 254, 1), rgba(199, 185, 254, 1));
-}
-
-.white-note-top {
-  background: #f7f7f7;
-  height: 30px;
-}
-
-.white-note {
-  background: rgb(255, 255, 255);
-  background-image: -webkit-linear-gradient(rgba(255, 255, 255, 1), rgba(239, 239, 239, 1));
-  background-image: linear-gradient(rgba(255, 255, 255, 1), rgba(239, 239, 239, 1));
-}
-
-.delete-note {
-  float: right;
-}
-
-.delete-note:hover {
-  background-color: #eee;
-}
-
-.add-note {
-  float: left;
-}
-
-.add-note:hover {
-  background-color: #eee;
-}
-
-.change-note-colour:hover {
-  background-color: #eee;
-}
-
-.note-menu {
-  background-color: #ffffff;
-}
-
-.note .textarea {
-  width: 190px;
-  height: 140px;
-  padding: 0;
-  margin: 0;
-  background: none;
-  resize: none;
-  color: #222222;
-  border: none;
-  font-family: Segoe Print, Comic Sans MS, Tahoma, sans-serif;
-  font-size: 14pt;
-  overflow: hidden;
-  outline: none;
-  box-shadow: none;
-}

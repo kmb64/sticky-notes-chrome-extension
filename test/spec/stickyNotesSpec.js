@@ -11,8 +11,8 @@ describe('Sticky notes', function () {
 
     var $note = StickyNotes.create('pink');
 
-    expect($note.hasClass('note')).toBeTruthy();
-    expect($note.hasClass('pink')).toBeTruthy();
+    expect($note.hasClass('kbsn-sticky-note')).toBeTruthy();
+    expect($note.hasClass('kbsn-pink')).toBeTruthy();
     expect($note.find('textarea').length).toBeGreaterThan(0);
   });
 
@@ -55,7 +55,7 @@ describe('Sticky notes', function () {
   it('should colour a sticky note', function(){
     var $note = $('<div></div>');
     StickyNotes.colourNote($note, 'pink');
-    expect($note.hasClass('pink')).toBeTruthy();
+    expect($note.hasClass('kbsn-pink')).toBeTruthy();
     expect($note.colour).toBe('pink');
   });
 
