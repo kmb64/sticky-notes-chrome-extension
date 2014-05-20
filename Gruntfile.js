@@ -112,7 +112,13 @@ module.exports = function (grunt) {
             ]
           }
         ]
+      },
+      tmp : {
+        files: [
+          {src:['<%= config.tmp %>/*']}
+        ]
       }
+
     },
 
     // Make sure code styles are up to par and there are no obvious mistakes
@@ -353,6 +359,7 @@ module.exports = function (grunt) {
   grunt.registerTask('debug', function () {
     grunt.task.run([
       'jshint',
+      'clean:tmp',
       'copy:serve',
       'sass:serve',
       'concurrent:chrome',
