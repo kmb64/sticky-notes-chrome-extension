@@ -27,7 +27,9 @@ var StickyNotes = (function($){
 
     var $delete  = $note.find('.kbsn-icon.delete');
     $delete.click(function(){
-      deleteNote($note);
+      if(confirm('Are you sure you want do delete this sticky note?')) {
+        deleteNote($note);
+      }
     });
 
     var $add = $note.find('.kbsn-icon.add');
