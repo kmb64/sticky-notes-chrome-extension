@@ -32,7 +32,6 @@ $lightgreen : rgba(209, 254, 203, 1);
 
 .kbsn-sticky-note {
   position: absolute;
-  //box-shadow: 1px 3px 3px 2px #111111;
   -webkit-box-shadow: 1px 5px 3px 0 rgba(128,115,112,1);
   box-shadow: 1px 5px 3px 0 rgba(128,115,112,1);
   z-index: 9999;
@@ -45,6 +44,65 @@ $lightgreen : rgba(209, 254, 203, 1);
     height: 30px;
     margin: 0;
     padding: 0;
+  }
+
+  .kbsn-colour-select {
+    position: absolute;
+    margin: 0;
+    padding: 10px;
+    background: #fff;
+    cursor: default;
+    -webkit-box-shadow: 1px 5px 3px 0 rgba(128,115,112,1);
+    box-shadow: 1px 5px 3px 0 rgba(128,115,112,1);
+    color: #000;
+    font-family: Arial,sans-serif;
+
+    > ul {
+      list-style: none;
+      margin:0;
+      li {
+        text-align: left;
+        padding: 2px 16px 2px 16px;
+        height: 22px;
+        line-height: 22px;
+        &.yellow {
+          @include sticky-note-bg($lightyellow, $darkyellow);
+          &:hover {
+            background: $topyellow;
+          }
+        }
+        &.blue {
+          @include sticky-note-bg($lightblue, $darkblue);
+          &:hover {
+            background: $topblue;
+          }
+        }
+        &.pink {
+          @include sticky-note-bg($lightpink, $darkpink);
+          &:hover {
+            background: $toppink;
+          }
+        }
+        &.purple {
+          @include sticky-note-bg($lightpurple, $darkpurple);
+          &:hover {
+            background: $toppurple;
+          }
+        }
+        &.white {
+          @include sticky-note-bg($lightwhite, $darkwhite);
+          &:hover {
+            background: $topwhite;
+          }
+        }
+        &.green {
+          @include sticky-note-bg($lightgreen, $darkgreen);
+          &:hover {
+            background: $topgreen;
+          }
+        }
+      }
+    }
   }
 
   &.kbsn-yellow {

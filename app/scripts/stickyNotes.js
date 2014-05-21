@@ -15,7 +15,38 @@ var StickyNotes = (function($){
     '<textarea class="kbsn-textarea" value=""></textarea>' +
     '</div>';
 
+  var COLOUR_SELECT_HTML = '<div class="kbsn-colour-select">' +
+      '<ul>' +
+      '<li class="yellow" data-colour="yellow">Yellow</li>' +
+      '<li class="blue" data-colour="blue">Blue</li>' +
+      '<li class="pink" data-colour="pink">Pink</li>' +
+      '<li class="purple" data-colour="purple">Purple</li>' +
+      '<li class="white" data-colour="white">White</li>' +
+      '<li class="green" data-colour="green">Green</li>' +
+      '</ul>' +
+      '</div>';
+
+//  var COLOURS = {
+//    yellow : 'yellow',
+//    blue : 'blue',
+//    pink : 'pink',
+//    purple : 'purple',
+//    white : 'white',
+//    green : 'green'
+//  };
+
+  var setUpColourMenu = function($note) {
+    var $colourMenu = $(COLOUR_SELECT_HTML);
+    $colourMenu.find('ul > li').each(function(){
+      $(this).click(function(){
+        colourNote($note, $(this).attr('data-colour'));
+      });
+    });
+    $note.append($colourMenu);
+  };
+
   var colourNote = function($note, colour) {
+    $note.removeClass(CSS_CLASS_PREFIX + '-' + $note.colour);
     $note.addClass(CSS_CLASS_PREFIX + '-' + colour);
     $note.colour = colour;
   };
@@ -37,6 +68,12 @@ var StickyNotes = (function($){
 
     $note.draggable();
     $note.resizable();
+
+    $note.on('contextmenu', function(){
+      console.log('show colour selection');
+    });
+
+    setUpColourMenu($note);
 
     return $note;
   };
@@ -60,17 +97,8 @@ var StickyNotes = (function($){
     chrome.storage.sync.set({'value': 'karl'}, function() {
       // Notify that we saved.
       console.log('Settings saved');
-      loadNote('value')
+      loadNote('value') ;
     });
-
-    chrome.tabs.onActivated.addListener(function(){
-      chrome.tabs.query('active', function(active) {
-        if(active){
-          alert('hi');
-        }
-      });
-    });
-
   };
 
   var loadNote = function(key) {
