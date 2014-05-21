@@ -29,11 +29,10 @@ $darkgreen : rgba(177, 232, 174, 1);
 $topgreen : #c5f7c1;
 $lightgreen : rgba(209, 254, 203, 1);
 
-
 .kbsn-sticky-note {
   position: absolute;
-  -webkit-box-shadow: 1px 5px 3px 0 rgba(128,115,112,1);
-  box-shadow: 1px 5px 3px 0 rgba(128,115,112,1);
+  -webkit-box-shadow: 1px 5px 3px 0 rgba(0,0,0,0.75);
+  box-shadow: 1px 5px 3px 0 rgba(0,0,0,0.75);
   z-index: 9999;
   margin: 0;
   padding: 0;
@@ -47,13 +46,15 @@ $lightgreen : rgba(209, 254, 203, 1);
   }
 
   .kbsn-colour-select {
+    z-index: 100;
+    display:none;
     position: absolute;
     margin: 0;
     padding: 10px;
     background: #fff;
     cursor: default;
-    -webkit-box-shadow: 1px 5px 3px 0 rgba(128,115,112,1);
-    box-shadow: 1px 5px 3px 0 rgba(128,115,112,1);
+    -webkit-box-shadow: 1px 5px 3px 0 rgba(0,0,0,0.75);
+    box-shadow: 1px 5px 3px 0 rgba(0,0,0,0.75);
     color: #000;
     font-family: Arial,sans-serif;
 
@@ -133,7 +134,7 @@ $lightgreen : rgba(209, 254, 203, 1);
     }
   }
 
-  .kbsn-white {
+  &.kbsn-white {
     @include sticky-note-bg($lightwhite, $darkwhite);
     .kbsn-top {
       background: $topwhite;
