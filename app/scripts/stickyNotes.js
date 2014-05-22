@@ -21,6 +21,7 @@ var StickyNotes = (function($){
   var init = function(){
 
     chrome.storage.sync.get(NOTE_STORAGE_KEY, function(obj) {
+      console.log(obj);
       if(obj[NOTE_STORAGE_KEY].length) {
         $.each(obj[NOTE_STORAGE_KEY], function(){
           addNote(createNote(this.colour, this.size, this.text), this.position);
@@ -58,7 +59,7 @@ var StickyNotes = (function($){
           text : thisNote.find('.kbsn-textarea').val()
         });
       });
-      saveNote({STORAGE_KEY: noteModels});
+      saveNote({'kbsn-sticky-notes': noteModels});
     });
   };
 
@@ -155,7 +156,6 @@ var StickyNotes = (function($){
     chrome.storage.sync.set(obj, function() {
       console.log('Notes saved');
     });
-
   };
 
   return {
