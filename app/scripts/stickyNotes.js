@@ -8,31 +8,21 @@ var StickyNotes = (function($){
   var $body = $('body');
   var $document = $(document);
   var DEFAULT_COLOUR = 'pink';
+  var NOTE_STORAGE_KEY = 'kbsn-sticky-notes';
 
-  var NOTE_HTML = '<div class="kbsn-sticky-note">' +
-    '<div class="kbsn-top">' +
-    '<div class="add kbsn-icon plus"></div>' +
-    '<div class="delete kbsn-icon close"></div>' +
-    '</div>' +
-    '<textarea class="kbsn-textarea" value=""></textarea>' +
-    '</div>';
+  var NOTE_HTML = '<div class="kbsn-sticky-note"><div class="kbsn-top"><div class="add kbsn-icon plus"></div>' +
+      '<div class="delete kbsn-icon close"></div></div><textarea class="kbsn-textarea" value=""></textarea></div>';
 
-  var COLOUR_SELECT_HTML = '<div class="kbsn-colour-select">' +
-      '<ul>' +
-      '<li class="yellow" data-colour="yellow">Yellow</li>' +
-      '<li class="blue" data-colour="blue">Blue</li>' +
-      '<li class="pink" data-colour="pink">Pink</li>' +
-      '<li class="purple" data-colour="purple">Purple</li>' +
-      '<li class="white" data-colour="white">White</li>' +
-      '<li class="green" data-colour="green">Green</li>' +
-      '</ul>' +
-      '</div>';
+  var COLOUR_SELECT_HTML = '<div class="kbsn-colour-select"><ul><li class="yellow" data-colour="yellow">Yellow</li>' +
+      '<li class="blue" data-colour="blue">Blue</li><li class="pink" data-colour="pink">Pink</li>' +
+      '<li class="purple" data-colour="purple">Purple</li><li class="white" data-colour="white">White</li>' +
+      '<li class="green" data-colour="green">Green</li></ul></div>';
 
   var init = function(){
 
-    chrome.storage.sync.get('kbsn-sticky-notes', function(obj) {
-      if(obj['kbsn-sticky-notes'].length) {
-        $.each(obj['kbsn-sticky-notes'], function(){
+    chrome.storage.sync.get(NOTE_STORAGE_KEY, function(obj) {
+      if(obj[NOTE_STORAGE_KEY].length) {
+        $.each(obj[NOTE_STORAGE_KEY], function(){
           addNote(createNote(this.colour, this.size, this.text), this.position);
         });
       }
@@ -68,8 +58,7 @@ var StickyNotes = (function($){
           text : thisNote.find('.kbsn-textarea').val()
         });
       });
-      saveNote({'kbsn-sticky-notes': noteModels});
-      console.log('Notes saved -->' + noteModels);
+      saveNote({STORAGE_KEY: noteModels});
     });
   };
 
@@ -108,8 +97,8 @@ var StickyNotes = (function($){
     colourNote($note, colour);
 
     $note.css({
-       width : size.width,
-       height : size.height
+      width : size.width,
+      height : size.height
     });
 
     $note.find('.kbsn-textarea').val(text);
@@ -128,7 +117,6 @@ var StickyNotes = (function($){
     $note.resizable({
       stop : function(){
         updateTextAreaSize($note);
-        console.log('stopped')
       }
     });
 
@@ -164,7 +152,6 @@ var StickyNotes = (function($){
   };
 
   var saveNote = function(obj) {
-
     chrome.storage.sync.set(obj, function() {
       console.log('Notes saved');
     });
