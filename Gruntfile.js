@@ -143,7 +143,24 @@ module.exports = function (grunt) {
         ]
       },
       test: {
-        src: ['app/scripts/**/*.js']
+        src: ['app/scripts/**/*.js'],
+        options: {
+          template: require('grunt-template-jasmine-istanbul'),
+          templateOptions: {
+            coverage: '<%= config.tmp %>/test/reports/coverage/json/coverage.json',
+            thresholds: {
+              lines: 50,
+              statements: 50,
+              branches: 50,
+              functions: 50
+            },
+            report: [
+              {type: 'html', options: {dir: '<%= config.tmp %>/test/reports/coverage/html'}},
+              {type: 'lcovonly', options: {dir: '<%= config.tmp %>/test/reports/coverage/lcov'}},
+              {type: 'text-summary'}
+            ]
+          }
+        }
       }
     },
 

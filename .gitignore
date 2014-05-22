@@ -8,3 +8,5 @@ test/bower_components
 package
 *iml
 .idea
+.grunt
+_SpecRunner.html
