@@ -7,8 +7,7 @@ var StickyNotes = (function($){
   var CSS_CLASS_PREFIX = 'kbsn';
   var $body = $('body');
   var $document = $(document);
-  var $notes = [];
-  var $colourMenus = [];
+  var DEFAULT_COLOUR = 'pink';
 
   var NOTE_HTML = '<div class="kbsn-sticky-note">' +
     '<div class="kbsn-top">' +
@@ -30,17 +29,23 @@ var StickyNotes = (function($){
       '</div>';
 
   var init = function(){
-    //grab notes from storage
-    loadNote('kbsn-sticky-notes');
 
-    //else create a note
-    addNote(createNote('pink'));
+    chrome.storage.sync.get('kbsn-sticky-notes', function(obj) {
+      if(obj['kbsn-sticky-notes'].length) {
+        $.each(obj['kbsn-sticky-notes'], function(){
+          addNote(createNote(this.colour, this.size, this.text), this.position);
+        });
+      }
+      else {
+        addNote(createNote(DEFAULT_COLOUR, {width:200,height:200}, ''), {x:20,y:20});
+      }
+    });
 
     //Close colour select context menus when clicking outside
     $document.on('mouseup', function(event){
-      $.each($colourMenus, function(){
-        if (!this.is(event.target)){
-          this.hide();
+      $('.kbsn-colour-select').each(function(){
+        if (!$(this).is(event.target)){
+          $(this).hide();
         }
       });
     });
@@ -48,18 +53,19 @@ var StickyNotes = (function($){
     $(window).unload(function(){
       var noteModels = [];
 
-      $.each($notes, function(){
+      $('.kbsn-sticky-note').each(function(){
+        var thisNote = $(this);
         noteModels.push({
-          colour : this.colour,
+          colour : thisNote.attr('data-note-colour'),
           position : {
-            x : this.offset().left,
-            y : this.offset().top
+            x : thisNote.offset().left,
+            y : thisNote.offset().top
           },
           size : {
-            width : this.width(),
-            height: this.height()
+            width : thisNote.width(),
+            height: thisNote.height()
           },
-          text : this.find('.kbsn-textarea').val()
+          text : thisNote.find('.kbsn-textarea').val()
         });
       });
       saveNote({'kbsn-sticky-notes': noteModels});
@@ -76,28 +82,37 @@ var StickyNotes = (function($){
       });
     });
     $note.append($colourMenu);
-    $colourMenus.push($colourMenu);
 
     return $colourMenu;
   };
 
   var colourNote = function($note, colour) {
-    $note.removeClass(CSS_CLASS_PREFIX + '-' + $note.colour);
+    $note.removeClass(CSS_CLASS_PREFIX + '-' + $note.attr('data-note-colour'));
     $note.addClass(CSS_CLASS_PREFIX + '-' + colour);
-    $note.colour = colour;
+    $note.attr('data-note-colour', colour);
   };
 
-  var createNote = function(colour, position, size, text) {
-    colour = colour || 'pink';
-    position = position || {x : 20, y : 20};
-    size = size || {width : 200, height : 200};
-    text = text || '';
+  var updateTextAreaSize = function($note) {
+    //- 20px for right/left padding
+    var width = $note.width() - 20;
+    //-30px for note top + 20px for top/bottom padding
+    var height = $note.height() - 50;
+    $note.find('.kbsn-textarea').css({
+      'width' : width,
+      'height' : height
+    });
+  };
 
-    //updateTextAreaSize() ??
-
+  var createNote = function(colour, size, text) {
     var $note = $(NOTE_HTML);
-
     colourNote($note, colour);
+
+    $note.css({
+       width : size.width,
+       height : size.height
+    });
+
+    $note.find('.kbsn-textarea').val(text);
 
     var $delete  = $note.find('.kbsn-icon.delete');
     $delete.click(function(){
@@ -106,11 +121,16 @@ var StickyNotes = (function($){
 
     var $add = $note.find('.kbsn-icon.add');
     $add.click(function(){
-      addNote(createNote($note.colour));
+      addNote(createNote($note.attr('data-note-colour'), {width:200, height:200}, ''), {x:20,y:20});
     });
 
     $note.draggable();
-    $note.resizable();
+    $note.resizable({
+      stop : function(){
+        updateTextAreaSize($note);
+        console.log('stopped')
+      }
+    });
 
     var $colourMenu = setUpColourMenu($note);
 
@@ -124,17 +144,17 @@ var StickyNotes = (function($){
       return false;
     });
 
-    $notes.push($note);
     return $note;
   };
 
-  var addNote = function($note) {
+  var addNote = function($note, position) {
     $body.append($note);
     $note.css({
       'position': 'absolute',
-      'left' : 20,
-      'top' : 20
+      'left' : position.x,
+      'top' : position.y
     });
+    updateTextAreaSize($note);
   };
 
   var deleteNote = function($note){
@@ -151,25 +171,17 @@ var StickyNotes = (function($){
 
   };
 
-  var loadNote = function(key) {
-    chrome.storage.sync.get(key, function(data) {
-      // Notify that we saved.
-      console.log('Settings loaded' + data);
-      console.log(data);
-    });
-  };
-
   return {
     createNote : createNote,
     addNote : addNote,
     deleteNote : deleteNote,
     colourNote : colourNote,
     saveNote : saveNote,
-    start : init
+    setUp : init
   };
 }(jQuery));
 
-StickyNotes.start();
+StickyNotes.setUp();
 
 
 
