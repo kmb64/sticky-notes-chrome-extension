@@ -367,7 +367,7 @@ module.exports = function (grunt) {
         },
         files: {
           // Only does single files - no concatenating multiple files into a single file.
-          '<%= config.tmp %>/styles/stickyNotes.css' : '<%= config.app %>/styles/stickyNotes.scss'
+          '<%= config.tmp %>/styles/sticky-notes.css' : '<%= config.app %>/styles/sticky-notes.scss'
         }
       }
     }

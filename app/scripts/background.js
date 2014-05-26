@@ -6,10 +6,10 @@ chrome.runtime.onInstalled.addListener(function (details) {
   console.log('previousVersion', details.previousVersion);
 });
 
-chrome.browserAction.setBadgeText({text: '\'kk'});
+//chrome.browserAction.setBadgeText({text: '\'kk'});
 
 chrome.browserAction.onClicked.addListener(function () {
-  chrome.tabs.executeScript(null, {file: 'scripts/stickyNotes.js'});
+  chrome.tabs.executeScript(null, {file: 'scripts/sticky-notes.js'});
 });
 
 //chrome.tabs.onActivated.addListener(function(){

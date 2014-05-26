@@ -7,7 +7,6 @@ var StickyNotes = (function($){
   var CSS_CLASS_PREFIX = 'kbsn';
   var $body = $('body');
   var $document = $(document);
-  var DEFAULT_COLOUR = 'pink';
   var NOTE_STORAGE_KEY = 'kbsn-sticky-notes';
 
   var NOTE_HTML = '<div class="kbsn-sticky-note"><div class="kbsn-top"><div class="add kbsn-icon plus"></div>' +
@@ -22,7 +21,7 @@ var StickyNotes = (function($){
 
     chrome.storage.sync.get(NOTE_STORAGE_KEY, function(obj) {
       console.log(obj);
-      if(obj[NOTE_STORAGE_KEY].length) {
+      if(typeof obj[NOTE_STORAGE_KEY] !== 'undefined' && obj[NOTE_STORAGE_KEY].length) {
         $.each(obj[NOTE_STORAGE_KEY], function(){
           addNote(createNote({
             'colour': this.colour,
