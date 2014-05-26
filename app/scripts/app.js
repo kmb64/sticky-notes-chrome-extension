@@ -10,7 +10,6 @@ var stickyNotesExist = function(){
 
 var saveStickyNotes = function(){
   var noteModels = [];
-
   StickyNotes.getAll().each(function(){
     var thisNote = $(this);
     noteModels.push({
@@ -28,38 +27,53 @@ var saveStickyNotes = function(){
   });
 };
 
-chrome.storage.sync.get(NOTE_STORAGE_KEY, function(obj) {
-  console.log(obj);
-  if(typeof obj[NOTE_STORAGE_KEY] !== 'undefined' && obj[NOTE_STORAGE_KEY].length) {
+var loadStickyNotes = function(){
+  chrome.storage.sync.get(NOTE_STORAGE_KEY, function(obj) {
+    console.log(obj);
+    if(typeof obj[NOTE_STORAGE_KEY] !== 'undefined' && obj[NOTE_STORAGE_KEY].length) {
 
-    $.each(obj[NOTE_STORAGE_KEY], function(){
-      StickyNotes.addNote(StickyNotes.createNote({
-        'colour': this.colour,
-        'width' : this.width,
-        'height' : this.height,
-        'x' : this.x,
-        'y' : this.y,
-        'text' : this.text
-      }));
-    });
-  }
-  else {
-    StickyNotes.addNote(StickyNotes.createNote());
-  }
-});
+      $.each(obj[NOTE_STORAGE_KEY], function(){
+        StickyNotes.addNote(StickyNotes.createNote({
+          'colour': this.colour,
+          'width' : this.width,
+          'height' : this.height,
+          'x' : this.x,
+          'y' : this.y,
+          'text' : this.text
+        }));
+      });
+    }
+    else {
+      StickyNotes.addNote(StickyNotes.createNote());
+    }
+  });
+};
 
-$(window).unload(function(){
-  if(stickyNotesExist()) {
-    saveStickyNotes();
-  }
-});
+if(!stickyNotesExist()){
+  loadStickyNotes();
 
-$(document).mouseup(function(e){
-  var stickyNotes = StickyNotes.getAll();
-  if (!stickyNotes.is(e.target) && stickyNotes.has(e.target).length === 0 && stickyNotesExist()) {
-    saveStickyNotes();
-    stickyNotes.each(function(){
-      StickyNotes.deleteNote($(this));
-    });
-  }
-});
+  $(window).unload(function(){
+    if(stickyNotesExist()) {
+      saveStickyNotes();
+    }
+  });
+
+  $(document).mouseup(function(e){
+    var stickyNotes = StickyNotes.getAll();
+    if (!stickyNotes.is(e.target) && stickyNotes.has(e.target).length === 0 && stickyNotesExist()) {
+      saveStickyNotes();
+      stickyNotes.each(function(){
+        StickyNotes.deleteNote($(this));
+      });
+    }
+  });
+
+  $(window).blur(function() {
+    if(stickyNotesExist()){
+      saveStickyNotes();
+      StickyNotes.getAll().each(function(){
+        StickyNotes.deleteNote($(this));
+      });
+    }
+  });
+}
