@@ -1,4 +1,5 @@
-/*global jQuery, chrome*/
+/*global jQuery*/
+/*exported StickyNotes*/
 
 'use strict';
 
@@ -6,8 +7,6 @@ var StickyNotes = (function($){
 
   var CSS_CLASS_PREFIX = 'kbsn';
   var $body = $('body');
-  var $document = $(document);
-  var NOTE_STORAGE_KEY = 'kbsn-sticky-notes';
 
   var NOTE_HTML = '<div class="kbsn-sticky-note"><div class="kbsn-top"><div class="add kbsn-icon plus"></div>' +
       '<div class="delete kbsn-icon close"></div></div><textarea class="kbsn-textarea" value=""></textarea></div>';
@@ -16,54 +15,6 @@ var StickyNotes = (function($){
       '<li class="blue" data-colour="blue">Blue</li><li class="pink" data-colour="pink">Pink</li>' +
       '<li class="purple" data-colour="purple">Purple</li><li class="white" data-colour="white">White</li>' +
       '<li class="green" data-colour="green">Green</li></ul></div>';
-
-  var init = function(){
-
-    chrome.storage.sync.get(NOTE_STORAGE_KEY, function(obj) {
-      console.log(obj);
-      if(typeof obj[NOTE_STORAGE_KEY] !== 'undefined' && obj[NOTE_STORAGE_KEY].length) {
-        $.each(obj[NOTE_STORAGE_KEY], function(){
-          addNote(createNote({
-            'colour': this.colour,
-            'width' : this.width,
-            'height' : this.height,
-            'x' : this.x,
-            'y' : this.y,
-            'text' : this.text
-          }));
-        });
-      }
-      else {
-        addNote(createNote());
-      }
-    });
-
-    //Close colour select context menus when clicking outside
-    $document.on('mouseup', function(event){
-      $('.kbsn-colour-select').each(function(){
-        if (!$(this).is(event.target)){
-          $(this).hide();
-        }
-      });
-    });
-
-    $(window).unload(function(){
-      var noteModels = [];
-
-      $('.kbsn-sticky-note').each(function(){
-        var thisNote = $(this);
-        noteModels.push({
-          colour : thisNote.attr('data-note-colour'),
-          x : thisNote.offset().left,
-          y : thisNote.offset().top,
-          width : thisNote.width(),
-          height: thisNote.height(),
-          text : thisNote.find('.kbsn-textarea').val()
-        });
-      });
-      saveNote({'kbsn-sticky-notes': noteModels});
-    });
-  };
 
   var setUpColourMenu = function($note) {
     var $colourMenu = $(COLOUR_SELECT_HTML);
@@ -74,6 +25,13 @@ var StickyNotes = (function($){
       });
     });
     $note.append($colourMenu);
+
+    //Close colour select context menus when clicking outside
+    $(document).on('mouseup', function(event){
+      if (!$colourMenu.is(event.target)){
+        $colourMenu.hide();
+      }
+    });
 
     return $colourMenu;
   };
@@ -168,10 +126,8 @@ var StickyNotes = (function($){
     });
   };
 
-  var saveNote = function(obj) {
-    chrome.storage.sync.set(obj, function() {
-      console.log('Notes saved');
-    });
+  var getAll = function(){
+    return $('.kbsn-sticky-note');
   };
 
   return {
@@ -179,12 +135,10 @@ var StickyNotes = (function($){
     addNote : addNote,
     deleteNote : deleteNote,
     colourNote : colourNote,
-    saveNote : saveNote,
-    setUp : init
+    getAll : getAll,
+    getNoteColour : getNoteColour
   };
 }(jQuery));
-
-StickyNotes.setUp();
 
 
 

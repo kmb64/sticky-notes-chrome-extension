@@ -9,7 +9,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
 //chrome.browserAction.setBadgeText({text: '\'kk'});
 
 chrome.browserAction.onClicked.addListener(function () {
-  chrome.tabs.executeScript(null, {file: 'scripts/sticky-notes.js'});
+  chrome.tabs.executeScript(null, {file: 'scripts/app.js'});
 });
 
 //chrome.tabs.onActivated.addListener(function(){

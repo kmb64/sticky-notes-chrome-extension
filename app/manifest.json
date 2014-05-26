@@ -16,7 +16,8 @@
       ],
       "js": [
         "bower_components/jquery/dist/jquery.js",
-        "bower_components/jquery-ui/ui/jquery-ui.js"
+        "bower_components/jquery-ui/ui/jquery-ui.js",
+        "scripts/sticky-notes.js"
       ]
     }
   ],
