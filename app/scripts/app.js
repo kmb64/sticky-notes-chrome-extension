@@ -13,7 +13,7 @@ var saveStickyNotes = function(){
   StickyNotes.getAll().each(function(){
     var thisNote = $(this);
     noteModels.push({
-      colour : StickyNotes.getNoteColour(thisNote),
+      colour : StickyNotes.getColour(thisNote),
       x : thisNote.offset().left,
       y : thisNote.offset().top,
       width : thisNote.width(),
@@ -33,7 +33,7 @@ var loadStickyNotes = function(){
     if(typeof obj[NOTE_STORAGE_KEY] !== 'undefined' && obj[NOTE_STORAGE_KEY].length) {
 
       $.each(obj[NOTE_STORAGE_KEY], function(){
-        StickyNotes.addNote(StickyNotes.createNote({
+        StickyNotes.add(StickyNotes.create({
           'colour': this.colour,
           'width' : this.width,
           'height' : this.height,
@@ -44,7 +44,7 @@ var loadStickyNotes = function(){
       });
     }
     else {
-      StickyNotes.addNote(StickyNotes.createNote());
+      StickyNotes.add(StickyNotes.create());
     }
   });
 };
@@ -63,7 +63,7 @@ if(!stickyNotesExist()){
     if (!stickyNotes.is(e.target) && stickyNotes.has(e.target).length === 0 && stickyNotesExist()) {
       saveStickyNotes();
       stickyNotes.each(function(){
-        StickyNotes.deleteNote($(this));
+        StickyNotes.destroy($(this));
       });
     }
   });
@@ -72,7 +72,7 @@ if(!stickyNotesExist()){
     if(stickyNotesExist()){
       saveStickyNotes();
       StickyNotes.getAll().each(function(){
-        StickyNotes.deleteNote($(this));
+        StickyNotes.destroy($(this));
       });
     }
   });

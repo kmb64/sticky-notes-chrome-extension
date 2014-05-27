@@ -20,7 +20,7 @@ var StickyNotes = (function($){
     var $colourMenu = $(COLOUR_SELECT_HTML);
     $colourMenu.find('ul > li').each(function(){
       $(this).click(function(){
-        colourNote($note, $(this).attr('data-colour'));
+        setColour($note, $(this).attr('data-colour'));
         $colourMenu.hide();
       });
     });
@@ -36,13 +36,13 @@ var StickyNotes = (function($){
     return $colourMenu;
   };
 
-  var colourNote = function($note, colour) {
-    $note.removeClass(CSS_CLASS_PREFIX + '-' + getNoteColour($note));
+  var setColour = function($note, colour) {
+    $note.removeClass(CSS_CLASS_PREFIX + '-' + getColour($note));
     $note.addClass(CSS_CLASS_PREFIX + '-' + colour);
     $note.attr('data-note-colour', colour);
   };
 
-  var getNoteColour = function($note){
+  var getColour = function($note){
     return $note.attr('data-note-colour');
   };
 
@@ -57,7 +57,7 @@ var StickyNotes = (function($){
     });
   };
 
-  var createNote = function(options) {
+  var create = function(options) {
 
     var settings = $.extend({
       colour : 'pink',
@@ -69,19 +69,19 @@ var StickyNotes = (function($){
     }, options);
 
     var $note = $(NOTE_HTML);
-    colourNote($note, settings.colour);
+    setColour($note, settings.colour);
 
     $note.find('.kbsn-textarea').val(settings.text);
 
     var $delete  = $note.find('.kbsn-icon.delete');
     $delete.click(function(){
-      deleteNote($note);
+      destroy($note);
     });
 
     var $add = $note.find('.kbsn-icon.add');
     $add.click(function() {
-      addNote(createNote({
-        'colour' : getNoteColour($note)
+      add(create({
+        'colour' : getColour($note)
       }));
     });
 
@@ -115,12 +115,12 @@ var StickyNotes = (function($){
     return $note;
   };
 
-  var addNote = function($note) {
+  var add = function($note) {
     $body.append($note);
     updateTextAreaSize($note);
   };
 
-  var deleteNote = function($note){
+  var destroy = function($note){
     $note.fadeOut(300, function(){
       $note.remove();
     });
@@ -131,12 +131,12 @@ var StickyNotes = (function($){
   };
 
   return {
-    createNote : createNote,
-    addNote : addNote,
-    deleteNote : deleteNote,
-    colourNote : colourNote,
+    create : create,
+    add : add,
+    destroy : destroy,
+    setColour : setColour,
     getAll : getAll,
-    getNoteColour : getNoteColour
+    getColour : getColour
   };
 }(jQuery));
 
