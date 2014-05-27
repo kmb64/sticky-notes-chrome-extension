@@ -1,47 +1,49 @@
 {
-  "name": "__MSG_appName__",
-  "version": "0.0.2",
-  "manifest_version": 2,
-  "description": "__MSG_appDescription__",
-  "icons": {
-    "16": "images/icon-16.png",
-    "128": "images/icon-128.png"
-  },
-  "default_locale": "en",
-  "content_scripts": [
-    {
-      "matches": ["http://*/*", "https://*/*"],
-      "css": [
-        "styles/sticky-notes.css"
-      ],
-      "js": [
-        "bower_components/jquery/dist/jquery.js",
-        "bower_components/jquery-ui/ui/jquery-ui.js",
-        "scripts/sticky-notes.js"
-      ]
-    }
-  ],
-  "background": {
-    "scripts": [
-      "scripts/chromereload.js",
-      "scripts/background.js"
-    ]
-  },
-  "browser_action": {
-    "default_icon": {
-      "19": "images/icon-19.png",
-      "38": "images/icon-38.png"
+    "name": "KB Sticky Notes",
+    "version": "1.1",
+    "manifest_version": 2,
+    "description": "Sticky notes while you browse the web.",
+    "icons": {
+        "16": "images/icon-16.png",
+        "128": "images/icon-128.png"
     },
-    "default_title": "Sticky Notes"
-  },
-  "permissions": [
-    "tabs",
-    "http://*/*",
-    "https://*/*",
-    "storage"
-  ],
-  "web_accessible_resources":
-    [
-      "styles/images/*.png"
+    "default_locale": "en",
+    "content_scripts": [
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "css": [
+                "styles/sticky-notes.css"
+            ],
+            "js": [
+                "bower_components/jquery/dist/jquery.js",
+                "bower_components/jquery-ui/ui/jquery-ui.js",
+                "scripts/sticky-notes.js"
+            ]
+        }
+    ],
+    "background": {
+        "scripts": [
+            "scripts/chromereload.js",
+            "scripts/background.js"
+        ]
+    },
+    "browser_action": {
+        "default_icon": {
+            "19": "images/icon-19.png",
+            "38": "images/icon-38.png"
+        },
+        "default_title": "Sticky Notes"
+    },
+    "permissions": [
+        "tabs",
+        "http://*/*",
+        "https://*/*",
+        "storage"
+    ],
+    "web_accessible_resources": [
+        "styles/images/*.png"
     ]
 }
