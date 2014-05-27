@@ -302,11 +302,18 @@ module.exports = function (grunt) {
             dest: '<%= config.dist %>',
             src: [
               '*.{ico,png,txt}',
-              'images/{,*/}*.{webp,gif}',
+              'images/{,*/}*.{webp,gif,png}',
               '{,*/}*.html',
               'styles/{,*/}*.css',
+              'styles/images/{,*/}*.{webp,gif,png}',
               'styles/fonts/{,*/}*.*',
               '_locales/{,*/}*.json',
+              'scripts/app.js',
+              'scripts/background.js',
+              'scripts/sticky-notes.js',
+              'bower_components/jquery/dist/jquery.js',
+              'bower_components/jquery-ui/ui/jquery-ui.js',
+              'manifest.json'
             ]
           }
         ]
@@ -369,6 +376,12 @@ module.exports = function (grunt) {
           // Only does single files - no concatenating multiple files into a single file.
           '<%= config.tmp %>/styles/sticky-notes.css' : '<%= config.app %>/styles/sticky-notes.scss'
         }
+      },
+      dist: {
+        files: {
+          // Only does single files - no concatenating multiple files into a single file.
+          '<%= config.dist %>/styles/sticky-notes.css' : '<%= config.app %>/styles/sticky-notes.scss'
+        }
       }
     }
   });
@@ -393,13 +406,14 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'chromeManifest:dist',
-    'useminPrepare',
-    'concurrent:dist',
-    'cssmin',
-    'concat',
-    'uglify',
-    'copy',
-    'usemin',
+    'sass:dist',
+//    'useminPrepare',
+//    'concurrent:dist',
+//    'cssmin',
+//    'concat',
+//    'uglify',
+    'copy:dist',
+//    'usemin',
     'compress'
   ]);
 
