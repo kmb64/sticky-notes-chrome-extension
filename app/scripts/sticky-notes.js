@@ -5,22 +5,33 @@
 
 var StickyNotes = (function($){
 
-  var CSS_CLASS_PREFIX = 'kbsn';
-  var $body = $('body');
+      //Data attributes
+  var DATA_COLOUR = 'data-colour',
+      DATA_NOTE_COLOUR = 'data-note-colour',
 
-  var NOTE_HTML = '<div class="kbsn-sticky-note"><div class="kbsn-top"><div class="add kbsn-icon plus"></div>' +
-      '<div class="delete kbsn-icon close"></div></div><textarea class="kbsn-textarea" value=""></textarea></div>';
+      //jQuery class selectors
+      TEXT_AREA = '.kbsn-textarea',
+      DELETE_ICON = '.kbsn-icon.delete',
+      ADD_ICON = '.kbsn-icon.add',
+      STICKY_NOTES = '.kbsn-sticky-note',
 
-  var COLOUR_SELECT_HTML = '<div class="kbsn-colour-select"><ul><li class="yellow" data-colour="yellow">Yellow</li>' +
+      //HTML fragments
+      NOTE_HTML = '<div class="kbsn-sticky-note"><div class="kbsn-top"><div class="add kbsn-icon plus"></div>' +
+      '<div class="delete kbsn-icon close"></div></div><textarea class="kbsn-textarea" value=""></textarea></div>',
+
+      COLOUR_SELECT_HTML = '<div class="kbsn-colour-select"><ul><li class="yellow" data-colour="yellow">Yellow</li>' +
       '<li class="blue" data-colour="blue">Blue</li><li class="pink" data-colour="pink">Pink</li>' +
       '<li class="purple" data-colour="purple">Purple</li><li class="white" data-colour="white">White</li>' +
-      '<li class="green" data-colour="green">Green</li></ul></div>';
+      '<li class="green" data-colour="green">Green</li></ul></div>',
+
+      CSS_CLASS_PREFIX = 'kbsn',
+      $body = $('body');
 
   var setUpColourMenu = function($note) {
     var $colourMenu = $(COLOUR_SELECT_HTML);
     $colourMenu.find('ul > li').each(function(){
       $(this).click(function(){
-        setColour($note, $(this).attr('data-colour'));
+        setColour($note, $(this).attr(DATA_COLOUR));
         $colourMenu.hide();
       });
     });
@@ -39,11 +50,11 @@ var StickyNotes = (function($){
   var setColour = function($note, colour) {
     $note.removeClass(CSS_CLASS_PREFIX + '-' + getColour($note));
     $note.addClass(CSS_CLASS_PREFIX + '-' + colour);
-    $note.attr('data-note-colour', colour);
+    $note.attr(DATA_NOTE_COLOUR, colour);
   };
 
   var getColour = function($note){
-    return $note.attr('data-note-colour');
+    return $note.attr(DATA_NOTE_COLOUR);
   };
 
   var updateTextAreaSize = function($note) {
@@ -51,7 +62,7 @@ var StickyNotes = (function($){
     var width = $note.width() - 20;
     //-30px for note top + 20px for top/bottom padding
     var height = $note.height() - 50;
-    $note.find('.kbsn-textarea').css({
+    $note.find(TEXT_AREA).css({
       'width' : width,
       'height' : height
     });
@@ -71,14 +82,14 @@ var StickyNotes = (function($){
     var $note = $(NOTE_HTML);
     setColour($note, settings.colour);
 
-    $note.find('.kbsn-textarea').val(settings.text);
+    $note.find(TEXT_AREA).val(settings.text);
 
-    var $delete  = $note.find('.kbsn-icon.delete');
+    var $delete  = $note.find(DELETE_ICON);
     $delete.click(function(){
       destroy($note);
     });
 
-    var $add = $note.find('.kbsn-icon.add');
+    var $add = $note.find(ADD_ICON);
     $add.click(function() {
       add(create({
         'colour' : getColour($note)
@@ -127,7 +138,11 @@ var StickyNotes = (function($){
   };
 
   var getAll = function(){
-    return $('.kbsn-sticky-note');
+    return $(STICKY_NOTES);
+  };
+
+  var getText = function($note){
+    return $note.find(TEXT_AREA).val();
   };
 
   return {
@@ -136,7 +151,8 @@ var StickyNotes = (function($){
     destroy : destroy,
     setColour : setColour,
     getAll : getAll,
-    getColour : getColour
+    getColour : getColour,
+    getText : getText
   };
 }(jQuery));
 

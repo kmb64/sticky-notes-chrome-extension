@@ -9,7 +9,7 @@ describe('Sticky notes', function () {
 
   it('should construct a coloured sticky note', function(){
 
-    var $note = StickyNotes.create('pink');
+    var $note = StickyNotes.create();
 
     expect($note.hasClass('kbsn-sticky-note')).toBeTruthy();
     expect($note.hasClass('kbsn-pink')).toBeTruthy();
@@ -19,7 +19,7 @@ describe('Sticky notes', function () {
   it('should add a sticky note to a web page', function(){
     var spy = spyOn($.fn, 'append');
 
-    var $note = StickyNotes.create('pink');
+    var $note = StickyNotes.create();
     StickyNotes.add($note);
 
     expect(spy).toHaveBeenCalledWith($note);
@@ -43,20 +43,11 @@ describe('Sticky notes', function () {
     expect(spy).toHaveBeenCalled();
   });
 
-  it('should position a sticky note correctly on the page', function(){
-    var spy = spyOn($.fn, 'css');
-
-    var $note = StickyNotes.create('pink');
-    StickyNotes.add($note);
-
-    expect(spy).toHaveBeenCalledWith({'position': 'absolute','left' : 20, 'top' : 20});
-  });
-
-  it('should colour a sticky note', function(){
-    var $note = $('<div></div>');
-    StickyNotes.setColour($note, 'pink');
-    expect($note.hasClass('kbsn-pink')).toBeTruthy();
-    expect($note.colour).toBe('pink');
+  it('should set the colour of a sticky note', function(){
+    var $note = StickyNotes.create();
+    StickyNotes.setColour($note, 'blue');
+    expect($note.hasClass('kbsn-blue')).toBeTruthy();
+    expect(StickyNotes.getColour($note)).toBe('blue');
   });
 
 });

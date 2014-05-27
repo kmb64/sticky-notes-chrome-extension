@@ -18,7 +18,7 @@ var saveStickyNotes = function(){
       y : thisNote.offset().top,
       width : thisNote.width(),
       height: thisNote.height(),
-      text : thisNote.find('.kbsn-textarea').val()
+      text : StickyNotes.getText(thisNote)
     });
   });
 
