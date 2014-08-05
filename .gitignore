@@ -10,3 +10,5 @@ package
 .idea
 .grunt
 _SpecRunner.html
+dist.crx
+dist.pem
