@@ -1,4 +1,4 @@
-// Generated on 2014-05-15 using generator-chrome-extension 0.2.7
+// Generated on 2015-08-13 using generator-chrome-extension 0.3.1
 'use strict';
 
 // # Globbing
@@ -17,10 +17,8 @@ module.exports = function (grunt) {
 
   // Configurable paths
   var config = {
-    tmp : '.tmp',
     app: 'app',
-    dist: 'dist',
-    manifest: grunt.file.readJSON('app/manifest.json')
+    dist: 'dist'
   };
 
   grunt.initConfig({
@@ -38,17 +36,17 @@ module.exports = function (grunt) {
         files: ['<%= config.app %>/scripts/{,*/}*.js'],
         tasks: ['jshint'],
         options: {
-          livereload: true
+          livereload: '<%= connect.options.livereload %>'
         }
       },
       gruntfile: {
         files: ['Gruntfile.js']
       },
       styles: {
-        files: ['<%= config.app %>/styles/{,*/}*.scss'],
-        tasks: ['sass:serve'],
+        files: ['<%= config.app %>/styles/{,*/}*.css'],
+        tasks: [],
         options: {
-          livereload: true
+          livereload: '<%= connect.options.livereload %>'
         }
       },
       livereload: {
@@ -56,18 +54,11 @@ module.exports = function (grunt) {
           livereload: '<%= connect.options.livereload %>'
         },
         files: [
-          '<%= config.tmp %>/*.html',
-          '<%= config.tmp %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-          '<%= config.tmp %>/manifest.json',
-          '<%= config.tmp %>/_locales/{,*/}*.json'
+          '<%= config.app %>/*.html',
+          '<%= config.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+          '<%= config.app %>/manifest.json',
+          '<%= config.app %>/_locales/{,*/}*.json'
         ]
-      },
-      serve: {
-        files: [
-          '<%= config.app %>/{,*/}*.html',
-          '<%= config.app %>/scripts/*.js'
-        ],
-        tasks: ['copy:serve']
       }
     },
 
@@ -83,7 +74,7 @@ module.exports = function (grunt) {
         options: {
           open: false,
           base: [
-            '<%= config.tmp %>'
+            '<%= config.app %>'
           ]
         }
       },
@@ -100,25 +91,16 @@ module.exports = function (grunt) {
 
     // Empties folders to start fresh
     clean: {
-      chrome: {
-      },
+      chrome: {},
       dist: {
-        files: [
-          {
-            dot: true,
-            src: [
-              '<%= config.dist %>/*',
-              '!<%= config.dist %>/.git*'
-            ]
-          }
-        ]
-      },
-      tmp : {
-        files: [
-          {src:['<%= config.tmp %>/*']}
-        ]
+        files: [{
+          dot: true,
+          src: [
+            '<%= config.dist %>/*',
+            '!<%= config.dist %>/.git*'
+          ]
+        }]
       }
-
     },
 
     // Make sure code styles are up to par and there are no obvious mistakes
@@ -134,32 +116,11 @@ module.exports = function (grunt) {
         'test/spec/{,*/}*.js'
       ]
     },
-    jasmine: {
-      options: {
-        specs: 'test/spec/**/*.js',
-        vendor: [
-          'app/bower_components/jquery/dist/jquery.js',
-          'app/bower_components/jquery-ui/ui/jquery-ui.js'
-        ]
-      },
-      test: {
-        src: ['app/scripts/**/*.js'],
+    mocha: {
+      all: {
         options: {
-          template: require('grunt-template-jasmine-istanbul'),
-          templateOptions: {
-            coverage: '<%= config.tmp %>/test/reports/coverage/json/coverage.json',
-            thresholds: {
-              lines: 50,
-              statements: 50,
-              branches: 50,
-              functions: 50
-            },
-            report: [
-              {type: 'html', options: {dir: '<%= config.tmp %>/test/reports/coverage/html'}},
-              {type: 'lcovonly', options: {dir: '<%= config.tmp %>/test/reports/coverage/lcov'}},
-              {type: 'text-summary'}
-            ]
-          }
+          run: true,
+          urls: ['http://localhost:<%= connect.options.port %>/index.html']
         }
       }
     },
@@ -181,6 +142,7 @@ module.exports = function (grunt) {
         dest: '<%= config.dist %>'
       },
       html: [
+        '<%= config.app %>/popup.html',
         '<%= config.app %>/options.html'
       ]
     },
@@ -197,27 +159,23 @@ module.exports = function (grunt) {
     // The following *-min tasks produce minifies files in the dist folder
     imagemin: {
       dist: {
-        files: [
-          {
-            expand: true,
-            cwd: '<%= config.app %>/images',
-            src: '{,*/}*.{gif,jpeg,jpg,png}',
-            dest: '<%= config.dist %>/images'
-          }
-        ]
+        files: [{
+          expand: true,
+          cwd: '<%= config.app %>/images',
+          src: '{,*/}*.{gif,jpeg,jpg,png}',
+          dest: '<%= config.dist %>/images'
+        }]
       }
     },
 
     svgmin: {
       dist: {
-        files: [
-          {
-            expand: true,
-            cwd: '<%= config.app %>/images',
-            src: '{,*/}*.svg',
-            dest: '<%= config.dist %>/images'
-          }
-        ]
+        files: [{
+          expand: true,
+          cwd: '<%= config.app %>/images',
+          src: '{,*/}*.svg',
+          dest: '<%= config.dist %>/images'
+        }]
       }
     },
 
@@ -233,14 +191,12 @@ module.exports = function (grunt) {
           // removeEmptyAttributes: true,
           // removeOptionalTags: true
         },
-        files: [
-          {
-            expand: true,
-            cwd: '<%= config.app %>',
-            src: '*.html',
-            dest: '<%= config.dist %>'
-          }
-        ]
+        files: [{
+          expand: true,
+          cwd: '<%= config.app %>',
+          src: '*.html',
+          dest: '<%= config.dist %>'
+        }]
       }
     },
 
@@ -248,88 +204,55 @@ module.exports = function (grunt) {
     // minification. These next options are pre-configured if you do not wish
     // to use the Usemin blocks.
     // cssmin: {
-    //     dist: {
-    //         files: {
-    //             '<%= config.dist %>/styles/main.css': [
-    //                 '<%= config.app %>/styles/{,*/}*.css'
-    //             ]
-    //         }
+    //   dist: {
+    //     files: {
+    //       '<%= config.dist %>/styles/main.css': [
+    //         '<%= config.app %>/styles/{,*/}*.css'
+    //       ]
     //     }
+    //   }
     // },
     // uglify: {
-    //     dist: {
-    //         files: {
-    //             '<%= config.dist %>/scripts/scripts.js': [
-    //                 '<%= config.dist %>/scripts/scripts.js'
-    //             ]
-    //         }
+    //   dist: {
+    //     files: {
+    //       '<%= config.dist %>/scripts/scripts.js': [
+    //         '<%= config.dist %>/scripts/scripts.js'
+    //       ]
     //     }
+    //   }
     // },
     // concat: {
-    //     dist: {}
+    //   dist: {}
     // },
 
     // Copies remaining files to places other tasks can use
     copy: {
-      serve: {
-        files : [
-          {
-            expand: true,
-            cwd: '<%= config.app %>',
-            dest: '<%= config.tmp %>',
-            src: [
-              '*.{ico,png,txt}',
-              'images/{,*/}*.{webp,gif,png}',
-              '{,*/}*.html',
-              'styles/{,*/}*.css',
-              'styles/images/{,*/}*.{webp,gif,png}',
-              'styles/fonts/{,*/}*.*',
-              '_locales/{,*/}*.json',
-              'scripts/{,*/}*.js',
-              'bower_components/jquery/dist/jquery.js',
-              'bower_components/jquery-ui/ui/jquery-ui.js',
-              'manifest.json'
-            ]
-          }
-        ]
-      },
       dist: {
-        files: [
-          {
-            expand: true,
-            dot: true,
-            cwd: '<%= config.app %>',
-            dest: '<%= config.dist %>',
-            src: [
-              '*.{ico,png,txt}',
-              'images/{,*/}*.{webp,gif,png}',
-              '{,*/}*.html',
-              'styles/{,*/}*.css',
-              'styles/images/{,*/}*.{webp,gif,png}',
-              'styles/fonts/{,*/}*.*',
-              '_locales/{,*/}*.json',
-              'scripts/app.js',
-              'scripts/background.js',
-              'scripts/sticky-notes.js',
-              'bower_components/jquery/dist/jquery.js',
-              'bower_components/jquery-ui/ui/jquery-ui.js',
-              'manifest.json'
-            ]
-          }
-        ]
+        files: [{
+          expand: true,
+          dot: true,
+          cwd: '<%= config.app %>',
+          dest: '<%= config.dist %>',
+          src: [
+            '*.{ico,png,txt}',
+            'images/{,*/}*.{webp,gif}',
+            '{,*/}*.html',
+            'styles/{,*/}*.css',
+            'styles/fonts/{,*/}*.*',
+            '_locales/{,*/}*.json',
+          ]
+        }]
       }
     },
 
     // Run some tasks in parallel to speed up build process
     concurrent: {
-      chrome: [
-      ],
+      chrome: [],
       dist: [
         'imagemin',
         'svgmin'
       ],
-      test: [
-      ]
+      test: []
     },
 
     // Auto buildnumber, exclude debug files. smart builds that event pages
@@ -337,6 +260,7 @@ module.exports = function (grunt) {
       dist: {
         options: {
           buildnumber: true,
+          indentSize: 2,
           background: {
             target: 'scripts/background.js',
             exclude: [
@@ -353,35 +277,17 @@ module.exports = function (grunt) {
     compress: {
       dist: {
         options: {
-          archive: 'package/Sticky Notes<%= config.manifest.version %>.zip'
-        },
-        files: [
-          {
-            expand: true,
-            cwd: 'dist/',
-            src: ['**'],
-            dest: ''
+          archive: function () {
+            var manifest = grunt.file.readJSON('app/manifest.json');
+            return 'package/sticky-notes-chrome-extension-' + manifest.version + '.zip';
           }
-        ]
-      }
-    },
-    sass: {
-      serve: {
-        options: {
-          sourceComments: 'normal',
-          // Pickup generated files (eg. _sprite.scss)
-          includePaths: ['']
         },
-        files: {
-          // Only does single files - no concatenating multiple files into a single file.
-          '<%= config.tmp %>/styles/sticky-notes.css' : '<%= config.app %>/styles/sticky-notes.scss'
-        }
-      },
-      dist: {
-        files: {
-          // Only does single files - no concatenating multiple files into a single file.
-          '<%= config.dist %>/styles/sticky-notes.css' : '<%= config.app %>/styles/sticky-notes.scss'
-        }
+        files: [{
+          expand: true,
+          cwd: 'dist/',
+          src: ['**'],
+          dest: ''
+        }]
       }
     }
   });
@@ -389,9 +295,6 @@ module.exports = function (grunt) {
   grunt.registerTask('debug', function () {
     grunt.task.run([
       'jshint',
-      'clean:tmp',
-      'copy:serve',
-      'sass:serve',
       'concurrent:chrome',
       'connect:chrome',
       'watch'
@@ -400,20 +303,19 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', [
     'connect:test',
-    'jasmine'
+    'mocha'
   ]);
 
   grunt.registerTask('build', [
     'clean:dist',
     'chromeManifest:dist',
-    'sass:dist',
-//    'useminPrepare',
-//    'concurrent:dist',
-//    'cssmin',
-//    'concat',
-//    'uglify',
-    'copy:dist',
-//    'usemin',
+    'useminPrepare',
+    'concurrent:dist',
+    'cssmin',
+    'concat',
+    'uglify',
+    'copy',
+    'usemin',
     'compress'
   ]);
 
