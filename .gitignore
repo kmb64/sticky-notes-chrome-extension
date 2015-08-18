@@ -12,3 +12,4 @@ package
 _SpecRunner.html
 dist.crx
 dist.pem
+app/styles/app.css

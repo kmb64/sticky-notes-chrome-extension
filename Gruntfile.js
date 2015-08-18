@@ -43,8 +43,8 @@ module.exports = function (grunt) {
         files: ['Gruntfile.js']
       },
       styles: {
-        files: ['<%= config.app %>/styles/{,*/}*.css'],
-        tasks: [],
+        files: ['<%= config.app %>/styles/{,*/}*.scss'],
+        tasks: ['sass'],
         options: {
           livereload: '<%= connect.options.livereload %>'
         }
@@ -273,6 +273,14 @@ module.exports = function (grunt) {
       }
     },
 
+    sass: {
+      app: {
+        files: {
+          '<%= config.app %>/styles/app.css': '<%= config.app %>/styles/app.scss'
+        }
+      }
+    },
+
     // Compres dist files to package
     compress: {
       dist: {
@@ -294,6 +302,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('debug', function () {
     grunt.task.run([
+      'sass',
       'jshint',
       'concurrent:chrome',
       'connect:chrome',
