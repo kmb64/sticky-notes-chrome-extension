@@ -40,12 +40,14 @@ $lightgreen : rgba(209, 254, 203, 1);
   height: 200px;
 
   .kbsn-top {
+    position:relative;
     height: 30px;
     margin: 0;
     padding: 0;
   }
 
   .kbsn-colour-select {
+    min-width:120px;
     z-index: 100;
     display:none;
     position: absolute;
@@ -63,6 +65,8 @@ $lightgreen : rgba(209, 254, 203, 1);
       margin:0;
       padding: 0;
       li {
+        font-family: Arial, sans-serif;
+        font-size: 12px;
         text-align: left;
         padding: 2px 16px 2px 16px;
         height: 22px;
@@ -159,7 +163,7 @@ $lightgreen : rgba(209, 254, 203, 1);
     color: #222222;
     border: none;
     font-family: Segoe Print, Comic Sans MS, Tahoma, sans-serif;
-    font-size: 14pt;
+    font-size: 14px;
     outline: none;
     box-shadow: none;
   }
@@ -208,16 +212,26 @@ $lightgreen : rgba(209, 254, 203, 1);
   width: 16px;
   height: 16px;
   background-image: url('chrome-extension://__MSG_@@extension_id__/styles/images/ui-icons_222222_256x240.png');
+  position: absolute;
+  top : 0;
   &:hover {
     background-color: #fff;
   }
   &.plus {
     background-position: -16px -128px;
-    float: left;
+    left: 0;
   }
   &.close {
     background-position: -80px -128px;
-    float: right;
+    right: 0;
+  }
+  &.zoomin {
+    background-position: -128px -112px;
+    left: 16px;
+  }
+  &.zoomout {
+    background-position: -144px -112px;
+    left : 32px;
   }
   &.drag {
     background-position: -64px -224px;

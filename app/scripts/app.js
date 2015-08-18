@@ -18,7 +18,8 @@ var saveStickyNotes = function(){
       y : thisNote.offset().top,
       width : thisNote.width(),
       height: thisNote.height(),
-      text : StickyNotes.getText(thisNote)
+      text : StickyNotes.getText(thisNote),
+      fontSize : StickyNotes.getFontSize(thisNote)
     });
   });
 
@@ -39,7 +40,8 @@ var loadStickyNotes = function(){
           'height' : this.height,
           'x' : this.x,
           'y' : this.y,
-          'text' : this.text
+          'text' : this.text,
+          'fontSize' : this.fontSize
         }));
       });
     }
