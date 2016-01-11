@@ -150,7 +150,7 @@ var StickyNotes = (function ($) {
     });
 
     $note.css({
-      position: 'fixed',
+      position: 'absolute',
       top: settings.y,
       left: settings.x,
       width: settings.width,
